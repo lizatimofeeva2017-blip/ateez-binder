@@ -142,6 +142,10 @@
       background-size: cover; background-position: center;
       background-color: #F6F6F8;
     }
+    .add-form {
+      background: #FFFFFF; border-radius: 16px; padding: 14px;
+      margin-bottom: 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
     @media (max-width: 400px) {
       .nav-item { padding: 2px 4px; font-size: 0.55rem; }
     }
@@ -169,7 +173,8 @@
     financeExpanded: true,
     cardFilter: 'all',
     cardSearch: '',
-    cardGroupFilter: 'all'
+    cardGroupFilter: 'all',
+    showAddForm: false
   };
 
   const GROUPS = {
@@ -206,7 +211,7 @@
   function generateId() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 
   function loadState() {
-    const saved = localStorage.getItem('ateez_binder_stable_final');
+    const saved = localStorage.getItem('ateez_binder_final');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -217,12 +222,13 @@
         STATE.cardFilter = parsed.cardFilter || 'all';
         STATE.cardSearch = parsed.cardSearch || '';
         STATE.cardGroupFilter = parsed.cardGroupFilter || 'all';
+        STATE.showAddForm = false;
       } catch(e) {}
     }
   }
 
   function saveState() {
-    localStorage.setItem('ateez_binder_stable_final', JSON.stringify(STATE));
+    localStorage.setItem('ateez_binder_final', JSON.stringify(STATE));
   }
 
   function addRecentAction(text) {
@@ -361,8 +367,30 @@
         <div class="chip-select ${groupFilter === 'all' ? 'active' : ''}" data-group="all">Все группы</div>
         ${groups.map(g => `<div class="chip-select ${groupFilter === g ? 'active' : ''}" data-group="${g}">${g}</div>`).join('')}
       </div>
-      <button class="btn" id="addCardBtn" style="width:100%; margin-bottom:10px;">+ Добавить карту</button>
+      ${STATE.showAddForm ? `
+        <div class="add-form" id="addForm">
+          <h4 style="font-size:0.9rem; margin-bottom:8px;">➕ Добавить карту</h4>
+          <label style="font-size:0.7rem;">Группа:</label>
+          <div class="chip-row" id="groupChips"></div>
+          <label style="font-size:0.7rem;">Участник:</label>
+          <div class="chip-row" id="memberChips"></div>
+          <label style="font-size:0.7rem;">Альбом:</label>
+          <div class="chip-row" id="albumChips"></div>
+          <input class="input-field" id="addAlbumInput" placeholder="Или впишите свой альбом">
+          <input class="input-field" id="addSeller" placeholder="Продавец">
+          <input class="input-field" id="addPrice" placeholder="Цена (₽)" type="number">
+          <input class="input-field" id="addDefects" placeholder="Дефекты (если есть)">
+          <input class="input-field" id="addDate" type="date" placeholder="Дата покупки">
+          <label style="font-size:0.7rem;">Фото лицевой стороны:</label>
+          <input type="file" id="addImageFront" accept="image/*" class="input-field">
+          <label style="font-size:0.7rem;">Фото задника:</label>
+          <input type="file" id="addImageBack" accept="image/*" class="input-field">
+          <button class="btn" id="saveNewCard" style="width:100%; margin-top:8px;">Сохранить карту</button>
+          <button class="btn small outline" id="cancelNewCard" style="width:100%; margin-top:4px;">Отмена</button>
+        </div>
+      ` : `<button class="btn" id="showAddFormBtn" style="width:100%; margin-bottom:10px;">+ Добавить карту</button>`}
     `;
+
     html += cards.map((c, i) => {
       const si = getStatusInfo(c.status);
       const days = c.statusDate ? Math.floor((Date.now() - new Date(c.statusDate)) / 86400000) : 0;
@@ -382,6 +410,7 @@
         </div>
       </div>`;
     }).join('');
+
     document.getElementById('mainContent').innerHTML = html || 'Нет карт';
 
     document.getElementById('cardSearch').addEventListener('input', (e) => { STATE.cardSearch = e.target.value; saveState(); render(); });
@@ -391,96 +420,78 @@
     document.querySelectorAll('.chip-select[data-group]').forEach(chip => {
       chip.addEventListener('click', () => { STATE.cardGroupFilter = chip.dataset.group; saveState(); render(); });
     });
-    document.getElementById('addCardBtn').addEventListener('click', () => showAddCardDialog());
+
+    if (STATE.showAddForm) {
+      setupAddForm();
+      document.getElementById('cancelNewCard').addEventListener('click', () => {
+        STATE.showAddForm = false;
+        saveState(); render();
+      });
+    } else {
+      document.getElementById('showAddFormBtn').addEventListener('click', () => {
+        STATE.showAddForm = true;
+        saveState(); render();
+      });
+    }
+
     document.querySelectorAll('[data-card-index]').forEach(el => {
       el.addEventListener('click', () => showCardDetail(parseInt(el.dataset.cardIndex)));
     });
   }
 
-  function showAddCardDialog() {
-    const overlay = document.createElement('div');
-    overlay.className = 'overlay';
+  function setupAddForm() {
     let selGroup = 'ATEEZ';
     let selMember = '';
     let selAlbum = '';
 
-    const renderDialog = () => {
+    const updateForm = () => {
       const group = GROUPS[selGroup] || { members:[], albums:[] };
-      overlay.innerHTML = `
-        <div class="dialog">
-          <h4>➕ Добавить карту</h4>
-          <label style="font-size:0.7rem;">Группа:</label>
-          <div class="chip-row">${Object.keys(GROUPS).map(g => `<div class="chip-select ${selGroup===g?'active':''}" data-group="${g}">${g}</div>`).join('')}</div>
-          <label style="font-size:0.7rem;">Участник:</label>
-          <div class="chip-row">${group.members.map(m => `<div class="chip-select ${selMember===m?'active':''}" data-member="${m}">${m}</div>`).join('')}</div>
-          <label style="font-size:0.7rem;">Альбом:</label>
-          <div class="chip-row">${group.albums.map(a => `<div class="chip-select ${selAlbum===a?'active':''}" data-album="${a}">${a}</div>`).join('')}</div>
-          <input class="input-field" id="customAlbumInput" placeholder="Или впишите свой альбом">
-          <input class="input-field" id="customSeller" placeholder="Продавец">
-          <input class="input-field" id="customPrice" placeholder="Цена (₽)" type="number">
-          <input class="input-field" id="customDefects" placeholder="Дефекты (если есть)">
-          <input class="input-field" id="customDate" type="date" placeholder="Дата покупки">
-          <label style="font-size:0.7rem;">Фото лицевой стороны:</label>
-          <input type="file" id="customImageFront" accept="image/*" class="input-field">
-          <label style="font-size:0.7rem;">Фото задника:</label>
-          <input type="file" id="customImageBack" accept="image/*" class="input-field">
-          <button class="btn" id="saveCardBtn" style="width:100%; margin-top:10px;">Сохранить</button>
-          <button class="btn small outline" id="cancelCardBtn" style="width:100%; margin-top:4px;">Отмена</button>
-        </div>
-      `;
-      document.body.appendChild(overlay);
+      document.getElementById('groupChips').innerHTML = Object.keys(GROUPS).map(g => `<div class="chip-select ${selGroup===g?'active':''}" data-group="${g}">${g}</div>`).join('');
+      document.getElementById('memberChips').innerHTML = group.members.map(m => `<div class="chip-select ${selMember===m?'active':''}" data-member="${m}">${m}</div>`).join('');
+      document.getElementById('albumChips').innerHTML = group.albums.map(a => `<div class="chip-select ${selAlbum===a?'active':''}" data-album="${a}">${a}</div>`).join('');
 
-      overlay.querySelectorAll('[data-group]').forEach(chip => {
-        chip.addEventListener('click', () => { selGroup = chip.dataset.group; selMember = ''; selAlbum = ''; overlay.remove(); renderDialog(); });
+      document.querySelectorAll('#groupChips .chip-select').forEach(chip => {
+        chip.addEventListener('click', () => { selGroup = chip.dataset.group; selMember = ''; selAlbum = ''; updateForm(); });
       });
-      overlay.querySelectorAll('[data-member]').forEach(chip => {
-        chip.addEventListener('click', () => { selMember = chip.dataset.member; overlay.remove(); renderDialog(); });
+      document.querySelectorAll('#memberChips .chip-select').forEach(chip => {
+        chip.addEventListener('click', () => { selMember = chip.dataset.member; updateForm(); });
       });
-      overlay.querySelectorAll('[data-album]').forEach(chip => {
-        chip.addEventListener('click', () => { selAlbum = chip.dataset.album; overlay.remove(); renderDialog(); });
+      document.querySelectorAll('#albumChips .chip-select').forEach(chip => {
+        chip.addEventListener('click', () => { selAlbum = chip.dataset.album; updateForm(); });
       });
-
-      overlay.querySelector('#saveCardBtn').addEventListener('click', () => {
-        const albumInput = overlay.querySelector('#customAlbumInput').value.trim();
-        const finalAlbum = selAlbum || albumInput;
-        if (!selMember) return alert('Выберите участника');
-
-        // Сначала сохраняем карту без фото
-        const saveCard = (frontData, backData) => {
-          STATE.cards.push({
-            id: generateId(), group: selGroup, member: selMember, album: finalAlbum,
-            seller: overlay.querySelector('#customSeller').value.trim(),
-            price: overlay.querySelector('#customPrice').value.trim(),
-            defects: overlay.querySelector('#customDefects').value.trim(),
-            date: overlay.querySelector('#customDate').value,
-            imageFront: frontData || '', imageBack: backData || '',
-            status: 'ordered', statusDate: new Date().toISOString(),
-            statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
-          });
-          addRecentAction(`➕ ${selGroup} — ${selMember}`);
-          saveState(); render(); overlay.remove();
-        };
-
-        const fileFront = overlay.querySelector('#customImageFront').files[0];
-        const fileBack = overlay.querySelector('#customImageBack').files[0];
-
-        // Если фото нет — сохраняем сразу
-        if (!fileFront && !fileBack) {
-          saveCard('', '');
-          return;
-        }
-
-        // Если есть фото — читаем их
-        let frontData = '', backData = '', done = 0;
-        const check = () => { done++; if (done === 2) saveCard(frontData, backData); };
-        if (fileFront) { const r = new FileReader(); r.onload = e => { frontData = e.target.result; check(); }; r.readAsDataURL(fileFront); } else check();
-        if (fileBack) { const r = new FileReader(); r.onload = e => { backData = e.target.result; check(); }; r.readAsDataURL(fileBack); } else check();
-      });
-
-      overlay.querySelector('#cancelCardBtn').addEventListener('click', () => { overlay.remove(); });
     };
-    renderDialog();
-}
+    updateForm();
+
+    document.getElementById('saveNewCard').addEventListener('click', () => {
+      const albumInput = document.getElementById('addAlbumInput').value.trim();
+      const finalAlbum = selAlbum || albumInput;
+      if (!selMember) return alert('Выберите участника');
+
+      const saveCard = (front, back) => {
+        STATE.cards.push({
+          id: generateId(), group: selGroup, member: selMember, album: finalAlbum,
+          seller: document.getElementById('addSeller').value.trim(),
+          price: document.getElementById('addPrice').value.trim(),
+          defects: document.getElementById('addDefects').value.trim(),
+          date: document.getElementById('addDate').value,
+          imageFront: front || '', imageBack: back || '',
+          status: 'ordered', statusDate: new Date().toISOString(),
+          statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
+        });
+        addRecentAction(`➕ ${selGroup} — ${selMember}`);
+        STATE.showAddForm = false;
+        saveState(); render();
+      };
+
+      const fileFront = document.getElementById('addImageFront').files[0];
+      const fileBack = document.getElementById('addImageBack').files[0];
+      if (!fileFront && !fileBack) { saveCard('', ''); return; }
+      let frontData = '', backData = '', done = 0;
+      const check = () => { done++; if (done === 2) saveCard(frontData, backData); };
+      if (fileFront) { const r = new FileReader(); r.onload = e => { frontData = e.target.result; check(); }; r.readAsDataURL(fileFront); } else check();
+      if (fileBack) { const r = new FileReader(); r.onload = e => { backData = e.target.result; check(); }; r.readAsDataURL(fileBack); } else check();
+    });
+  }
 
   function showCardDetail(index) {
     const card = STATE.cards[index];
