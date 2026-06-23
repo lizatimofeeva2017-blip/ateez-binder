@@ -429,6 +429,7 @@
         </div>
       `;
       document.body.appendChild(overlay);
+
       overlay.querySelectorAll('[data-group]').forEach(chip => {
         chip.addEventListener('click', () => { selGroup = chip.dataset.group; selMember = ''; selAlbum = ''; overlay.remove(); renderDialog(); });
       });
@@ -438,35 +439,48 @@
       overlay.querySelectorAll('[data-album]').forEach(chip => {
         chip.addEventListener('click', () => { selAlbum = chip.dataset.album; overlay.remove(); renderDialog(); });
       });
+
       overlay.querySelector('#saveCardBtn').addEventListener('click', () => {
         const albumInput = overlay.querySelector('#customAlbumInput').value.trim();
         const finalAlbum = selAlbum || albumInput;
         if (!selMember) return alert('Выберите участника');
-        const processImages = (front, back) => {
+
+        // Сначала сохраняем карту без фото
+        const saveCard = (frontData, backData) => {
           STATE.cards.push({
             id: generateId(), group: selGroup, member: selMember, album: finalAlbum,
             seller: overlay.querySelector('#customSeller').value.trim(),
             price: overlay.querySelector('#customPrice').value.trim(),
             defects: overlay.querySelector('#customDefects').value.trim(),
             date: overlay.querySelector('#customDate').value,
-            imageFront: front || '', imageBack: back || '',
+            imageFront: frontData || '', imageBack: backData || '',
             status: 'ordered', statusDate: new Date().toISOString(),
             statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
           });
           addRecentAction(`➕ ${selGroup} — ${selMember}`);
           saveState(); render(); overlay.remove();
         };
+
         const fileFront = overlay.querySelector('#customImageFront').files[0];
         const fileBack = overlay.querySelector('#customImageBack').files[0];
+
+        // Если фото нет — сохраняем сразу
+        if (!fileFront && !fileBack) {
+          saveCard('', '');
+          return;
+        }
+
+        // Если есть фото — читаем их
         let frontData = '', backData = '', done = 0;
-        const check = () => { done++; if (done === 2) processImages(frontData, backData); };
+        const check = () => { done++; if (done === 2) saveCard(frontData, backData); };
         if (fileFront) { const r = new FileReader(); r.onload = e => { frontData = e.target.result; check(); }; r.readAsDataURL(fileFront); } else check();
         if (fileBack) { const r = new FileReader(); r.onload = e => { backData = e.target.result; check(); }; r.readAsDataURL(fileBack); } else check();
       });
+
       overlay.querySelector('#cancelCardBtn').addEventListener('click', () => { overlay.remove(); });
     };
     renderDialog();
-  }
+}
 
   function showCardDetail(index) {
     const card = STATE.cards[index];
