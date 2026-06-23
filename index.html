@@ -38,53 +38,20 @@
     .bottom-nav {
       display: flex; justify-content: space-around; align-items: center;
       background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.04);
-      padding: 8px 0 12px; flex-shrink: 0;
+      padding: 8px 0 12px; flex-shrink: 0; overflow-x: auto;
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center;
-      gap: 2px; color: #A1A1AA; font-size: 0.65rem; font-weight: 500;
-      cursor: pointer; padding: 4px 10px; border-radius: 14px; transition: 0.2s;
-      position: relative;
+      gap: 2px; color: #A1A1AA; font-size: 0.6rem; font-weight: 500;
+      cursor: pointer; padding: 4px 8px; border-radius: 14px; transition: 0.2s;
+      position: relative; white-space: nowrap;
     }
     .nav-item.active { color: #D3542B; background: rgba(211,84,43,0.08); }
-    .nav-icon { font-size: 1.4rem; line-height: 1; }
+    .nav-icon { font-size: 1.3rem; line-height: 1; }
     .badge {
       background: #D3542B; color: #FFFFFF; border-radius: 10px;
-      padding: 0 5px; font-size: 0.6rem; font-weight: 600;
+      padding: 0 5px; font-size: 0.55rem; font-weight: 600;
       position: absolute; top: -2px; right: -2px;
-    }
-    .binder-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-      background: #FFFFFF; padding: 16px; border-radius: 18px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-    }
-    .card-slot {
-      aspect-ratio: 2/3; border-radius: 14px; position: relative;
-      display: flex; align-items: center; justify-content: center;
-      color: #2B2B2B; font-weight: 600; cursor: pointer; transition: 0.2s;
-      background: #FFFFFF; border: 1px solid rgba(0,0,0,0.06);
-      background-size: cover; background-position: center; overflow: hidden;
-      filter: brightness(0.6);
-    }
-    .card-slot:active { transform: scale(0.96); }
-    .card-slot.owned {
-      border: 1.5px solid #D3542B; box-shadow: 0 0 0 3px rgba(211,84,43,0.1);
-      filter: brightness(1);
-    }
-    .card-slot .like {
-      position: absolute; top: 6px; left: 6px; font-size: 0.9rem;
-    }
-    .card-slot .transit-badge {
-      position: absolute; bottom: 6px; right: 6px; background: #F6F6F8;
-      border-radius: 8px; padding: 2px 6px; font-size: 0.55rem;
-      color: #2B2B2B; border: 1px solid rgba(0,0,0,0.06);
-    }
-    .pin-icon {
-      position: absolute; top: 6px; right: 6px; font-size: 0.9rem;
-      cursor: pointer; z-index: 5; color: #A1A1AA;
-    }
-    .empty-slot {
-      background: #F6F6F8; border: 1px dashed rgba(0,0,0,0.1); color: #A1A1AA;
     }
     .btn {
       background: #D3542B; border: none; padding: 8px 14px;
@@ -92,25 +59,25 @@
       color: #FFFFFF; cursor: pointer; transition: 0.2s;
     }
     .btn.small { padding: 4px 10px; font-size: 0.7rem; }
-    .btn.outline {
-      background: transparent; border: 1px solid #D3542B; color: #D3542B;
-    }
-    .btn.danger {
-      background: transparent; border: 1px solid #D3542B; color: #D3542B;
-    }
+    .btn.outline { background: transparent; border: 1px solid #D3542B; color: #D3542B; }
     .dialog {
       background: #FFFFFF; border-radius: 22px; padding: 24px;
       width: 90%; max-width: 340px; color: #2B2B2B;
       box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      max-height: 80vh; overflow-y: auto;
     }
-    .dialog h4 {
-      font-family: 'Lora', serif; font-size: 1rem; margin-bottom: 12px;
+    .dialog h4 { font-family: 'Lora', serif; font-size: 1rem; margin-bottom: 12px; }
+    .input-field {
+      width: 100%; margin: 4px 0; padding: 8px; border-radius: 12px;
+      border: 1px solid #E0E0E0; font-size: 0.8rem;
     }
-    .status-btn {
-      background: #F6F6F8; border: 1px solid rgba(0,0,0,0.04);
-      padding: 8px 12px; border-radius: 14px; margin: 3px;
-      font-size: 0.75rem; color: #2B2B2B; cursor: pointer;
+    .chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0; }
+    .chip-select {
+      padding: 6px 12px; border-radius: 20px; font-size: 0.7rem;
+      background: #F6F6F8; color: #2B2B2B; cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.04);
     }
+    .chip-select.active { background: #D3542B; color: #FFFFFF; border-color: #D3542B; }
     .toast {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       background: #2B2B2B; color: #FFFFFF; padding: 12px 24px;
@@ -121,18 +88,9 @@
       background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 100;
       display: flex; align-items: center; justify-content: center;
     }
-    .progress-bar {
-      width: 100%; height: 6px; background: rgba(0,0,0,0.04);
-      border-radius: 3px; margin: 8px 0;
-    }
-    .progress-fill { height: 100%; background: #D3542B; border-radius: 3px; }
-    .chip {
-      background: rgba(211,84,43,0.08); border-radius: 14px;
-      padding: 4px 10px; font-size: 0.7rem; color: #D3542B; font-weight: 500;
-    }
-    .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .card-cell {
-      background: #FFFFFF; border-radius: 16px; padding: 14px;
+      background: #FFFFFF; border-radius: 16px; padding: 12px;
       color: #2B2B2B; font-size: 0.8rem; cursor: pointer;
       box-shadow: 0 4px 14px rgba(0,0,0,0.04); transition: 0.2s;
       display: flex; align-items: center; gap: 8px;
@@ -142,8 +100,50 @@
       margin-bottom: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);
     }
     .feed-item .info { padding: 12px; color: #2B2B2B; font-size: 0.8rem; }
+    .stat-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .stat-box {
+      flex: 1; background: #FFFFFF; border-radius: 14px;
+      padding: 10px; text-align: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    .stat-box .stat-num { font-size: 1.2rem; font-weight: 600; }
+    .stat-box .stat-label { font-size: 0.6rem; color: #A1A1AA; margin-top: 2px; }
+    .widget-row { display: flex; gap: 8px; margin: 10px 0; }
+    .widget-card {
+      flex: 1; background: #FFFFFF; border-radius: 14px;
+      padding: 10px; text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    }
+    .widget-card .widget-number { font-size: 1.3rem; font-weight: 700; }
+    .widget-card .widget-label { font-size: 0.6rem; color: #A1A1AA; margin-top: 2px; }
+    .big-transit-banner {
+      background: #D3542B; color: #FFFFFF; border-radius: 16px;
+      padding: 16px; text-align: center; margin-bottom: 12px;
+      font-size: 1rem; font-weight: 600;
+    }
+    .finance-block {
+      background: #FFFFFF; border-radius: 16px;
+      padding: 12px; margin-bottom: 10px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    .finance-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .finance-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem; color: #2B2B2B; }
+    .collapse-icon { transition: transform 0.3s; font-size: 0.9rem; color: #A1A1AA; }
+    .collapse-icon.open { transform: rotate(180deg); }
+    .section-title { color: #2B2B2B; font-family: 'Lora', serif; font-size: 0.85rem; margin: 10px 0 6px; }
+    .search-input {
+      width: 100%; padding: 10px; border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.06); background: #FFFFFF;
+      font-size: 0.8rem; margin-bottom: 10px;
+    }
+    .custom-card-images { display: flex; gap: 4px; flex-shrink: 0; }
+    .custom-card-image-small {
+      width: 40px; height: 60px; border-radius: 8px;
+      background-size: cover; background-position: center;
+      background-color: #F6F6F8;
+    }
     @media (max-width: 400px) {
-      .nav-item { padding: 2px 6px; font-size: 0.6rem; }
+      .nav-item { padding: 2px 4px; font-size: 0.55rem; }
     }
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -153,7 +153,7 @@
 <body>
 <div class="app-container" id="app">
   <div class="header" id="header">
-    <div class="header-left"><span class="header-title">Главная</span></div>
+    <div class="header-left"><span class="header-title">🏴‍☠️ ATEEZ BINDER</span></div>
     <div id="headerAction"><span class="material-symbols-outlined" style="cursor:pointer;">settings</span></div>
   </div>
   <div class="main-content" id="mainContent"></div>
@@ -163,123 +163,71 @@
 <script>
   const STATE = {
     activeTab: 'home',
-    binder: {
-      album: 'golden_hour_pt1',
-      versionType: null,
-      subversion: null,
-      page: 0
-    },
-    pinnedCard: null,
+    cards: [],
     wishlist: [],
-    transitArchive: [],
-    achievements: [],
     recentActions: [],
-    cards: {}
+    financeExpanded: true,
+    cardFilter: 'all',
+    cardSearch: '',
+    cardGroupFilter: 'all'
   };
 
-  const MEMBERS = ['Hongjoong','Seonghwa','Yunho','Yeosang','San','Mingi','Wooyoung','Jongho'];
-  const ALBUM_MEMBERS_ORDER = ['Seonghwa','Hongjoong','Yunho','Yeosang','San','Mingi','Wooyoung','Jongho'];
-
-  function getPhotoPath(cardKey) {
-    if (!cardKey) return '';
-    let path = cardKey.replace('golden_hour_pt1', 'gh1');
-    // Убираем _card и оставляем только номер
-    path = path.replace(/_(card)(\d+)$/, '_$2');
-    return `cards/${path}.jpg`;
-  }
-
-  function getCardImageStyle(cardKey) {
-    const path = getPhotoPath(cardKey);
-    return `background-image:url('${path}');`;
-  }
-
-  function getCardDisplayName(cardKey) {
-    if (!cardKey) return '';
-    const parts = cardKey.split('_');
-    // Извлекаем номер карты
-    const cardNum = parseInt(parts[parts.length-1].replace('card',''));
-
-    // Позиции задников: 5, 14, 23, 32 (всегда в центре страницы)
-    if (cardNum === 5 || cardNum === 14 || cardNum === 23 || cardNum === 32) {
-        return 'Задник';
+  const GROUPS = {
+    "ATEEZ": {
+      members: ["Hongjoong","Seonghwa","Yunho","Yeosang","San","Mingi","Wooyoung","Jongho"],
+      albums: ["Golden Hour Pt.1","Golden Hour Pt.2","Golden Hour Pt.3","Golden Hour Pt.4","THE WORLD EP.FIN : WILL","THE WORLD EP.2 : OUTLAW"]
+    },
+    "Stray Kids": {
+      members: ["Bang Chan","Lee Know","Changbin","Hyunjin","Han","Felix","Seungmin","I.N"],
+      albums: ["5-STAR","ROCK-STAR","ATE","MAXIDENT","ODDINARY"]
+    },
+    "GOT7": {
+      members: ["Jay B","Mark","Jackson","Jinyoung","Youngjae","BamBam","Yugyeom"],
+      albums: ["GOT7","Winter Heptagon","DYE","Breath of Love : Last Piece"]
+    },
+    "TXT": {
+      members: ["Yeonjun","Soobin","Beomgyu","Taehyun","Huening Kai"],
+      albums: ["The Dream Chapter: STAR","minisode 3: TOMORROW","The Name Chapter: FREEFALL"]
+    },
+    "ENHYPEN": {
+      members: ["Jungwon","Heeseung","Jay","Jake","Sunghoon","Sunoo","Ni-ki"],
+      albums: ["ROMANCE : UNTOLD","MANIFESTO : DAY 1","DIMENSION : DILEMMA"]
+    },
+    "BTS": {
+      members: ["RM","Jin","Suga","J-Hope","Jimin","V","Jungkook"],
+      albums: ["BE","Proof","Map of the Soul: 7","Love Yourself: Answer"]
+    },
+    "SEVENTEEN": {
+      members: ["S.Coups","Wonwoo","Mingyu","Vernon","Jeonghan","Joshua","Woozi","DK","Seungkwan","Dino","Hoshi","Jun","The8"],
+      albums: ["17 IS RIGHT HERE","SEVENTEENTH HEAVEN","Face the Sun","Attacca"]
     }
+  };
 
-    // Для карт до 5: номер = позиция
-    // Для карт между 5 и 14: номер = позиция - 1
-    // Для карт между 14 и 23: номер = позиция - 2
-    // Для карт после 32: номер = позиция - 4
-    let memberIndex;
-    if (cardNum < 5) {
-        memberIndex = cardNum - 1;
-    } else if (cardNum < 14) {
-        memberIndex = cardNum - 2; // -1 за задник 5
-    } else if (cardNum < 23) {
-        memberIndex = cardNum - 3; // -2 за задники 5 и 14
-    } else if (cardNum < 32) {
-        memberIndex = cardNum - 4; // -3 за задники 5, 14, 23
-    } else {
-        memberIndex = cardNum - 5; // -4 за задники 5, 14, 23, 32
-    }
-
-    const member = ALBUM_MEMBERS_ORDER[memberIndex % 8];
-
-    if (cardKey.includes('album_blue')) {
-        return `Album Blue · ${member}`;
-    } else if (cardKey.includes('album_diary')) {
-        return `Album Diary · ${member}`;
-    } else if (cardKey.includes('album_gh')) {
-        return `Album GH · ${member}`;
-    } else if (cardKey.includes('poco')) {
-        return `POCA · ${member}`;
-    }
-    return cardKey;
-}
-
-  function initCards() {
-    if (!STATE.cards._init) {
-      for (let i = 1; i <= 18; i++) {
-        STATE.cards[`golden_hour_pt1_album_blue_card${i}`] = createCardState();
-        STATE.cards[`golden_hour_pt1_album_diary_card${i}`] = createCardState();
-        STATE.cards[`golden_hour_pt1_album_gh_card${i}`] = createCardState();
-      }
-      for (let i = 1; i <= 36; i++) {
-        STATE.cards[`golden_hour_pt1_poco_card${i}`] = createCardState();
-      }
-      STATE.cards._init = true;
-    }
-  }
-
-  function createCardState() {
-    return {
-      owned: false, dupes: [], date: '', comment: '', rarity: 1, price: '',
-      transitStatus: null, transitData: null, statusHistory: []
-    };
-  }
+  function generateId() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 
   function loadState() {
-    const saved = localStorage.getItem('ateez_binder_gh1_final2');
+    const saved = localStorage.getItem('ateez_binder_stable_final');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        Object.assign(STATE, parsed);
-        STATE.cards = STATE.cards || {};
-        STATE.transitArchive = STATE.transitArchive || [];
-        STATE.achievements = STATE.achievements || [];
-        STATE.recentActions = STATE.recentActions || [];
-        STATE.wishlist = STATE.wishlist || [];
-        STATE.binder = STATE.binder || { album: 'golden_hour_pt1', versionType: null, subversion: null, page: 0 };
+        STATE.cards = parsed.cards || [];
+        STATE.wishlist = parsed.wishlist || [];
+        STATE.recentActions = parsed.recentActions || [];
+        STATE.financeExpanded = parsed.financeExpanded !== undefined ? parsed.financeExpanded : true;
+        STATE.cardFilter = parsed.cardFilter || 'all';
+        STATE.cardSearch = parsed.cardSearch || '';
+        STATE.cardGroupFilter = parsed.cardGroupFilter || 'all';
       } catch(e) {}
     }
-    initCards();
   }
 
   function saveState() {
-    localStorage.setItem('ateez_binder_gh1_final2', JSON.stringify(STATE));
+    localStorage.setItem('ateez_binder_stable_final', JSON.stringify(STATE));
   }
 
-  function addRecentAction(text, cardId = null) {
-    STATE.recentActions.unshift({ text, cardId, date: new Date().toISOString() });
-    if (STATE.recentActions.length > 30) STATE.recentActions.pop();
+  function addRecentAction(text) {
+    STATE.recentActions.unshift({ text, date: new Date().toISOString() });
+    if (STATE.recentActions.length > 50) STATE.recentActions.pop();
   }
 
   function showToast(text) {
@@ -287,61 +235,46 @@
     toast.className = 'toast';
     toast.textContent = text;
     document.body.appendChild(toast);
-    setTimeout(() => toast.style.opacity = '0', 2500);
-    setTimeout(() => toast.remove(), 3000);
+    setTimeout(() => toast.style.opacity = '0', 2000);
+    setTimeout(() => toast.remove(), 2500);
   }
 
-  function updateAchievements() {
-    let ownedTotal = 0, transitExists = false;
-    Object.values(STATE.cards).forEach(c => {
-      if (c.owned) ownedTotal++;
-      if (c.transitStatus) transitExists = true;
-    });
-    const totalCards = Object.keys(STATE.cards).length - 1;
-    if (ownedTotal >= 1 && !STATE.achievements.includes('first')) {
-      STATE.achievements.push('first');
-      showToast('🏆 Птенец! Первая карта');
-      addRecentAction('🏆 Достижение: Первая карта!');
-    }
-    if (ownedTotal === totalCards && !STATE.achievements.includes('full')) {
-      STATE.achievements.push('full');
-      showToast('🎉 Полный сет!');
-      addRecentAction('🏆 Достижение: Полный сет!');
-    }
-    if (transitExists && !STATE.achievements.includes('transit')) {
-      STATE.achievements.push('transit');
-      showToast('📦 Первая карта в пути');
-      addRecentAction('🏆 Достижение: Первый заказ в пути');
-    }
+  function getStatusInfo(status) {
+    const map = {
+      ordered: { text:'Заказана', color:'#E65100', bg:'#FFF3E0' },
+      paid: { text:'Оплачена', color:'#E65100', bg:'#FFF3E0' },
+      shipped: { text:'Отправлена', color:'#1B5E20', bg:'#E8F5E9' },
+      received: { text:'Получена', color:'#2B2B2B', bg:'#F6F6F8' }
+    };
+    return map[status] || map.ordered;
   }
 
   function render() {
     renderBottomNav();
     switch (STATE.activeTab) {
       case 'home': renderHome(); break;
+      case 'cards': renderCards(); break;
       case 'binder': renderBinder(); break;
       case 'wishlist': renderWishlist(); break;
-      case 'duplicates': renderDuplicates(); break;
-      case 'transit': renderTransit(); break;
+      case 'settings': renderSettings(); break;
     }
     saveState();
   }
 
   function renderBottomNav() {
     const nav = document.getElementById('bottomNav');
+    const transitCount = STATE.cards.filter(c => c.status !== 'received').length;
     const tabs = [
       { id: 'home', icon: 'home', label: 'Главная' },
+      { id: 'cards', icon: 'style', label: 'Мои карты' },
       { id: 'binder', icon: 'photo_album', label: 'Биндер' },
-      { id: 'wishlist', icon: 'favorite', label: 'Вишлист' },
-      { id: 'duplicates', icon: 'content_copy', label: 'Дубликаты' },
-      { id: 'transit', icon: 'local_shipping', label: 'В пути' }
+      { id: 'wishlist', icon: 'favorite', label: 'Вишлист' }
     ];
-    const transitCount = Object.values(STATE.cards).filter(c => c.transitStatus).length;
     nav.innerHTML = tabs.map(t => `
       <div class="nav-item ${STATE.activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">
         <span class="nav-icon material-symbols-outlined">${t.icon}</span>
         <span>${t.label}</span>
-        ${t.id === 'transit' && transitCount > 0 ? `<span class="badge">${transitCount}</span>` : ''}
+        ${t.id === 'cards' && transitCount > 0 ? `<span class="badge">${transitCount}</span>` : ''}
       </div>
     `).join('');
     nav.querySelectorAll('.nav-item').forEach(el => {
@@ -349,405 +282,345 @@
     });
   }
 
-  function setHeader(title, showBack = false, backAction = null) {
+  function setHeader(title, showBack = false, backTab = 'home') {
     document.querySelector('.header-title').textContent = title;
     const actionEl = document.getElementById('headerAction');
     if (showBack) {
       actionEl.innerHTML = '<span class="back-btn">← Назад</span>';
-      actionEl.onclick = backAction || (() => {
-        if (STATE.activeTab === 'binder') {
-          const b = STATE.binder;
-          if (b.subversion) { b.subversion = null; }
-          else if (b.versionType) { b.versionType = null; b.page = 0; }
-          else STATE.activeTab = 'home';
-          render();
-        } else { STATE.activeTab = 'home'; render(); }
-      });
+      actionEl.onclick = () => { STATE.activeTab = backTab; render(); };
     } else {
       actionEl.innerHTML = '<span class="material-symbols-outlined" style="cursor:pointer;">settings</span>';
+      actionEl.onclick = () => { STATE.activeTab = 'settings'; render(); };
     }
   }
 
-  // ГЛАВНАЯ
   function renderHome() {
-    setHeader('Главная');
-    const cards = Object.values(STATE.cards).filter(c => c && typeof c === 'object');
-    const owned = cards.filter(c => c.owned).length;
-    const total = Object.keys(STATE.cards).length - 1;
-    const transitCount = cards.filter(c => c.transitStatus).length;
+    setHeader('🏴‍☠️ ATEEZ BINDER');
+    const transitCount = STATE.cards.filter(c => c.status !== 'received').length;
+    const receivedCount = STATE.cards.filter(c => c.status === 'received').length;
     const wishCount = STATE.wishlist.length;
-    const dupCount = cards.reduce((s, c) => s + (c.dupes?.length || 0), 0);
-    const pinnedData = STATE.pinnedCard ? STATE.cards[STATE.pinnedCard] : null;
+    let spent = 0;
+    STATE.cards.forEach(c => { if (c.price) spent += Number(c.price) || 0; });
 
     document.getElementById('mainContent').innerHTML = `
-      <div style="display:flex; gap:10px; margin-bottom:14px;">
-        <div style="flex:1; background:#FFFFFF; border-radius:16px; padding:14px; text-align:center; box-shadow:0 4px 14px rgba(0,0,0,0.04);">
-          <div style="color:#D3542B; font-size:1.4rem; font-weight:600;">${owned}/${total}</div>
-          <div style="color:#A1A1AA; font-size:0.7rem;">Собрано</div>
+      <div class="big-transit-banner">🚚 ${transitCount} карт в пути</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num" style="color:#D3542B;">${receivedCount}</div><div class="stat-label">Получено</div></div>
+        <div class="stat-box"><div class="stat-num">${transitCount}</div><div class="stat-label">В пути</div></div>
+        <div class="stat-box"><div class="stat-num">${wishCount}</div><div class="stat-label">Вишлист</div></div>
+      </div>
+      <div class="widget-row">
+        <div class="widget-card"><div class="widget-number" style="color:#D3542B;">${transitCount}</div><div class="widget-label">🚚 Ко мне</div></div>
+        <div class="widget-card"><div class="widget-number">0</div><div class="widget-label">📤 От меня</div></div>
+      </div>
+      <div class="finance-block">
+        <div class="finance-header" id="financeToggle">
+          <span style="font-weight:600;">💰 Финансы</span>
+          <span class="collapse-icon ${STATE.financeExpanded ? 'open' : ''}">▼</span>
         </div>
-        <div style="flex:1; background:#FFFFFF; border-radius:16px; padding:14px; text-align:center; box-shadow:0 4px 14px rgba(0,0,0,0.04);">
-          <div style="color:#2B2B2B; font-size:1.4rem; font-weight:600;">${wishCount}</div>
-          <div style="color:#A1A1AA; font-size:0.7rem;">Вишлист</div>
-        </div>
-        <div style="flex:1; background:#FFFFFF; border-radius:16px; padding:14px; text-align:center; box-shadow:0 4px 14px rgba(0,0,0,0.04);">
-          <div style="color:#2B2B2B; font-size:1.4rem; font-weight:600;">${dupCount}</div>
-          <div style="color:#A1A1AA; font-size:0.7rem;">Дублей</div>
+        <div id="financeBody" style="${STATE.financeExpanded ? '' : 'display:none;'}">
+          <div class="finance-row"><span>Потрачено</span><span>${spent.toLocaleString()} ₽</span></div>
         </div>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${total ? (owned/total)*100 : 0}%"></div></div>
-      <div style="color:#A1A1AA; font-size:0.7rem; margin-bottom:12px;">${transitCount} карт в пути</div>
-      ${pinnedData ? `<div class="feed-item" id="pinnedCard">
-        <div style="aspect-ratio:2/3; background-size:cover; background-position:center; background-image:url('${getPhotoPath(STATE.pinnedCard)}'); background-color:#F6F6F8;"></div>
-        <div class="info"><b>Закреплена:</b> ${getCardDisplayName(STATE.pinnedCard)}</div>
-      </div>` : ''}
-      <h4 style="color:#2B2B2B; font-family:'Lora',serif; margin:10px 0 6px;">Достижения</h4>
-      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-        ${[
-          { key: 'first', icon: 'nest_eco_leaf', text: 'Птенец' },
-          { key: 'full', icon: 'trophy', text: 'Полный сет' },
-          { key: 'transit', icon: 'package_2', text: 'Посылочка' }
-        ].map(a => `
-          <span class="chip" style="opacity:${STATE.achievements.includes(a.key) ? 1 : 0.4}; display:flex; align-items:center; gap:4px;">
-            <span class="material-symbols-outlined" style="font-size:1rem;">${a.icon}</span> ${a.text}
-          </span>
-        `).join('')}
-      </div>
-      <h4 style="color:#2B2B2B; font-family:'Lora',serif; margin:10px 0 6px;">Недавние действия</h4>
-      ${STATE.recentActions.slice(0, 10).map(a => {
-        const imgPath = a.cardId ? getPhotoPath(a.cardId) : '';
-        return `
-        <div class="feed-item">
-          <div style="aspect-ratio:2/3; background-size:cover; background-position:center; background-color:#F6F6F8; ${imgPath ? `background-image:url('${imgPath}');` : ''}">
-          </div>
-          <div class="info">${a.text}<br><span style="color:#A1A1AA; font-size:0.65rem;">${new Date(a.date).toLocaleString()}</span></div>
-        </div>`;
-      }).join('') || '<div style="color:#A1A1AA;">пока пусто</div>'}
+      <h4 class="section-title">🕒 Недавние действия</h4>
+      ${STATE.recentActions.slice(0,10).map(a => `<div class="feed-item"><div class="info">${a.text}<br><span style="color:#A1A1AA; font-size:0.65rem;">${new Date(a.date).toLocaleString()}</span></div></div>`).join('') || '<div style="color:#A1A1AA;">пока пусто</div>'}
     `;
-    document.getElementById('pinnedCard')?.addEventListener('click', () => {
-      if (confirm('Открепить карту?')) { STATE.pinnedCard = null; render(); }
+    document.getElementById('financeToggle').addEventListener('click', () => {
+      STATE.financeExpanded = !STATE.financeExpanded;
+      document.getElementById('financeBody').style.display = STATE.financeExpanded ? '' : 'none';
+      saveState();
     });
   }
 
-  // БИНДЕР
+  function renderCards() {
+    setHeader('Мои карты');
+    let cards = [...STATE.cards];
+    const filter = STATE.cardFilter || 'all';
+    const search = (STATE.cardSearch || '').toLowerCase();
+    const groupFilter = STATE.cardGroupFilter || 'all';
+    if (filter !== 'all') cards = cards.filter(c => c.status === filter);
+    if (groupFilter !== 'all') cards = cards.filter(c => c.group === groupFilter);
+    if (search) cards = cards.filter(c =>
+      (c.group||'').toLowerCase().includes(search) ||
+      (c.member||'').toLowerCase().includes(search) ||
+      (c.album||'').toLowerCase().includes(search) ||
+      (c.seller||'').toLowerCase().includes(search)
+    );
+    const groups = [...new Set(STATE.cards.map(c => c.group).filter(Boolean))];
+
+    let html = `
+      <input class="search-input" id="cardSearch" placeholder="🔍 Поиск..." value="${STATE.cardSearch||''}">
+      <div class="chip-row" style="margin-bottom:6px;">
+        <div class="chip-select ${filter === 'all' ? 'active' : ''}" data-filter="all">Все</div>
+        <div class="chip-select ${filter === 'ordered' ? 'active' : ''}" data-filter="ordered">Заказана</div>
+        <div class="chip-select ${filter === 'paid' ? 'active' : ''}" data-filter="paid">Оплачена</div>
+        <div class="chip-select ${filter === 'shipped' ? 'active' : ''}" data-filter="shipped">Отправлена</div>
+        <div class="chip-select ${filter === 'received' ? 'active' : ''}" data-filter="received">Получена</div>
+      </div>
+      <div class="chip-row" style="margin-bottom:10px;">
+        <div class="chip-select ${groupFilter === 'all' ? 'active' : ''}" data-group="all">Все группы</div>
+        ${groups.map(g => `<div class="chip-select ${groupFilter === g ? 'active' : ''}" data-group="${g}">${g}</div>`).join('')}
+      </div>
+      <button class="btn" id="addCardBtn" style="width:100%; margin-bottom:10px;">+ Добавить карту</button>
+    `;
+    html += cards.map((c, i) => {
+      const si = getStatusInfo(c.status);
+      const days = c.statusDate ? Math.floor((Date.now() - new Date(c.statusDate)) / 86400000) : 0;
+      const frontBg = c.imageFront ? `background-image:url('${c.imageFront}');` : '';
+      const backBg = c.imageBack ? `background-image:url('${c.imageBack}');` : '';
+      const realIndex = STATE.cards.indexOf(c);
+      return `<div class="card-cell" data-card-index="${realIndex}">
+        <div class="custom-card-images">
+          <div class="custom-card-image-small" style="${frontBg}"></div>
+          ${c.imageBack ? `<div class="custom-card-image-small" style="${backBg}"></div>` : ''}
+        </div>
+        <div style="flex:1;">
+          <span style="background:${si.bg}; color:${si.color}; border-radius:8px; padding:2px 6px; font-size:0.55rem;">${si.text}</span><br>
+          <b>${c.group||'—'} · ${c.member||'—'}</b><br>
+          <span style="font-size:0.65rem;">${c.album||''} · ${c.seller||'?'} · ${c.price||'0'}₽</span>
+          ${c.status !== 'received' ? `<br><span style="font-size:0.6rem; color:#A1A1AA;">${days} дн.</span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('mainContent').innerHTML = html || 'Нет карт';
+
+    document.getElementById('cardSearch').addEventListener('input', (e) => { STATE.cardSearch = e.target.value; saveState(); render(); });
+    document.querySelectorAll('.chip-select[data-filter]').forEach(chip => {
+      chip.addEventListener('click', () => { STATE.cardFilter = chip.dataset.filter; saveState(); render(); });
+    });
+    document.querySelectorAll('.chip-select[data-group]').forEach(chip => {
+      chip.addEventListener('click', () => { STATE.cardGroupFilter = chip.dataset.group; saveState(); render(); });
+    });
+    document.getElementById('addCardBtn').addEventListener('click', () => showAddCardDialog());
+    document.querySelectorAll('[data-card-index]').forEach(el => {
+      el.addEventListener('click', () => showCardDetail(parseInt(el.dataset.cardIndex)));
+    });
+  }
+
+  function showAddCardDialog() {
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    let selGroup = 'ATEEZ';
+    let selMember = '';
+    let selAlbum = '';
+
+    const renderDialog = () => {
+      const group = GROUPS[selGroup] || { members:[], albums:[] };
+      overlay.innerHTML = `
+        <div class="dialog">
+          <h4>➕ Добавить карту</h4>
+          <label style="font-size:0.7rem;">Группа:</label>
+          <div class="chip-row">${Object.keys(GROUPS).map(g => `<div class="chip-select ${selGroup===g?'active':''}" data-group="${g}">${g}</div>`).join('')}</div>
+          <label style="font-size:0.7rem;">Участник:</label>
+          <div class="chip-row">${group.members.map(m => `<div class="chip-select ${selMember===m?'active':''}" data-member="${m}">${m}</div>`).join('')}</div>
+          <label style="font-size:0.7rem;">Альбом:</label>
+          <div class="chip-row">${group.albums.map(a => `<div class="chip-select ${selAlbum===a?'active':''}" data-album="${a}">${a}</div>`).join('')}</div>
+          <input class="input-field" id="customAlbumInput" placeholder="Или впишите свой альбом">
+          <input class="input-field" id="customSeller" placeholder="Продавец">
+          <input class="input-field" id="customPrice" placeholder="Цена (₽)" type="number">
+          <input class="input-field" id="customDefects" placeholder="Дефекты (если есть)">
+          <input class="input-field" id="customDate" type="date" placeholder="Дата покупки">
+          <label style="font-size:0.7rem;">Фото лицевой стороны:</label>
+          <input type="file" id="customImageFront" accept="image/*" class="input-field">
+          <label style="font-size:0.7rem;">Фото задника:</label>
+          <input type="file" id="customImageBack" accept="image/*" class="input-field">
+          <button class="btn" id="saveCardBtn" style="width:100%; margin-top:10px;">Сохранить</button>
+          <button class="btn small outline" id="cancelCardBtn" style="width:100%; margin-top:4px;">Отмена</button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      overlay.querySelectorAll('[data-group]').forEach(chip => {
+        chip.addEventListener('click', () => { selGroup = chip.dataset.group; selMember = ''; selAlbum = ''; overlay.remove(); renderDialog(); });
+      });
+      overlay.querySelectorAll('[data-member]').forEach(chip => {
+        chip.addEventListener('click', () => { selMember = chip.dataset.member; overlay.remove(); renderDialog(); });
+      });
+      overlay.querySelectorAll('[data-album]').forEach(chip => {
+        chip.addEventListener('click', () => { selAlbum = chip.dataset.album; overlay.remove(); renderDialog(); });
+      });
+      overlay.querySelector('#saveCardBtn').addEventListener('click', () => {
+        const albumInput = overlay.querySelector('#customAlbumInput').value.trim();
+        const finalAlbum = selAlbum || albumInput;
+        if (!selMember) return alert('Выберите участника');
+        const processImages = (front, back) => {
+          STATE.cards.push({
+            id: generateId(), group: selGroup, member: selMember, album: finalAlbum,
+            seller: overlay.querySelector('#customSeller').value.trim(),
+            price: overlay.querySelector('#customPrice').value.trim(),
+            defects: overlay.querySelector('#customDefects').value.trim(),
+            date: overlay.querySelector('#customDate').value,
+            imageFront: front || '', imageBack: back || '',
+            status: 'ordered', statusDate: new Date().toISOString(),
+            statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
+          });
+          addRecentAction(`➕ ${selGroup} — ${selMember}`);
+          saveState(); render(); overlay.remove();
+        };
+        const fileFront = overlay.querySelector('#customImageFront').files[0];
+        const fileBack = overlay.querySelector('#customImageBack').files[0];
+        let frontData = '', backData = '', done = 0;
+        const check = () => { done++; if (done === 2) processImages(frontData, backData); };
+        if (fileFront) { const r = new FileReader(); r.onload = e => { frontData = e.target.result; check(); }; r.readAsDataURL(fileFront); } else check();
+        if (fileBack) { const r = new FileReader(); r.onload = e => { backData = e.target.result; check(); }; r.readAsDataURL(fileBack); } else check();
+      });
+      overlay.querySelector('#cancelCardBtn').addEventListener('click', () => { overlay.remove(); });
+    };
+    renderDialog();
+  }
+
+  function showCardDetail(index) {
+    const card = STATE.cards[index];
+    if (!card) return;
+    const si = getStatusInfo(card.status);
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.innerHTML = `
+      <div class="dialog">
+        <h4>${card.group} — ${card.member}</h4>
+        <div style="display:flex; gap:8px; margin-bottom:8px;">
+          <div style="width:80px; height:120px; border-radius:10px; background-size:cover; background-position:center; background-color:#F6F6F8; ${card.imageFront ? `background-image:url('${card.imageFront}')` : ''}"></div>
+          ${card.imageBack ? `<div style="width:80px; height:120px; border-radius:10px; background-size:cover; background-position:center; background-color:#F6F6F8; background-image:url('${card.imageBack}')"></div>` : ''}
+        </div>
+        <div style="font-size:0.8rem;">
+          <div><b>Альбом:</b> ${card.album||'—'}</div>
+          <div><b>Цена:</b> ${card.price||'—'} ₽</div>
+          <div><b>Продавец:</b> ${card.seller||'—'}</div>
+          <div><b>Дефекты:</b> ${card.defects||'—'}</div>
+          <div><b>Дата:</b> ${card.date||'—'}</div>
+          <div><b>Статус:</b> ${si.text}</div>
+        </div>
+        <div class="chip-row" style="margin-top:6px;">
+          ${['ordered','paid','shipped','received'].map(s => `<div class="chip-select ${card.status===s?'active':''}" data-status="${s}">${getStatusInfo(s).text}</div>`).join('')}
+        </div>
+        <button class="btn small outline" id="closeCardDetail" style="margin-top:10px; width:100%;">Закрыть</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#closeCardDetail').addEventListener('click', () => overlay.remove());
+    overlay.querySelectorAll('[data-status]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        card.status = chip.dataset.status;
+        card.statusDate = new Date().toISOString();
+        card.statusHistory.push({ status: card.status, date: new Date().toISOString() });
+        addRecentAction(`🔄 ${card.group} — ${card.member}: ${getStatusInfo(card.status).text}`);
+        saveState(); render(); overlay.remove();
+      });
+    });
+  }
+
   function renderBinder() {
-    const b = STATE.binder;
-    if (!b.versionType) {
-      setHeader('Golden Hour Pt.1');
-      document.getElementById('mainContent').innerHTML = `
-        <div class="card-grid">
-          <div class="card-cell" data-type="album">📘 Album Ver.</div>
-          <div class="card-cell" data-type="poca">📷 POCA Ver.</div>
+    setHeader('Биндер');
+    const received = STATE.cards.filter(c => c.status === 'received');
+    const grouped = {};
+    received.forEach(c => {
+      const key = c.group + '|' + c.album;
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(c);
+    });
+    let html = '';
+    Object.entries(grouped).forEach(([key, cards]) => {
+      const [group, album] = key.split('|');
+      html += `<h4 class="section-title">${group} · ${album}</h4><div class="card-grid">`;
+      cards.forEach(c => {
+        html += `<div class="card-cell" data-card-id="${c.id}">
+          <div class="custom-card-images">
+            <div class="custom-card-image-small" style="background-image:url('${c.imageFront||''}'); background-size:cover;"></div>
+          </div>
+          <div>${c.member}<br><span style="font-size:0.65rem; color:#A1A1AA;">${c.price||'0'}₽</span></div>
         </div>`;
-      document.querySelectorAll('.card-cell[data-type]').forEach(el => {
-        el.addEventListener('click', () => { b.versionType = el.dataset.type; b.page = 0; render(); });
       });
-    } else if (b.versionType === 'album' && !b.subversion) {
-      setHeader('Album Ver.', true, () => { b.versionType = null; render(); });
-      document.getElementById('mainContent').innerHTML = `
-        <div class="card-grid">
-          <div class="card-cell" data-sub="blue">Blue hour Ver.</div>
-          <div class="card-cell" data-sub="diary">Diary Ver.</div>
-          <div class="card-cell" data-sub="gh">Golden hour Ver.</div>
-        </div>`;
-      document.querySelectorAll('.card-cell[data-sub]').forEach(el => {
-        el.addEventListener('click', () => { b.subversion = el.dataset.sub; b.page = 0; render(); });
-      });
-    } else {
-      renderBinderPage();
-    }
-  }
-
-  function renderBinderPage() {
-    const b = STATE.binder;
-    const isPoca = (b.versionType === 'poca');
-    let totalCards, prefix;
-
-    if (isPoca) {
-      totalCards = 36;
-      prefix = 'golden_hour_pt1_poco';
-    } else {
-      totalCards = 18;
-      prefix = `golden_hour_pt1_album_${b.subversion}`;
-    }
-
-    const totalPages = Math.ceil(totalCards / 9);
-    const rows = 3;
-
-    const start = b.page * 9;
-    const pageCards = [];
-    for (let i = start; i < Math.min(start + 9, totalCards); i++) {
-      pageCards.push(i + 1);
-    }
-
-    setHeader(isPoca ? 'POCA Ver.' : `Album ${b.subversion}`, true, () => {
-      if (isPoca) { b.versionType = null; }
-      else { b.subversion = null; }
-      b.page = 0;
-      render();
+      html += '</div>';
     });
-
-    let gridHtml = `<div class="binder-grid" style="grid-template-rows: repeat(${rows}, 1fr);">`;
-    pageCards.forEach(cardNum => {
-      const cardKey = `${prefix}_card${cardNum}`;
-      const card = STATE.cards[cardKey] || createCardState();
-      const owned = card.owned;
-      const transitStatus = card.transitStatus;
-      const pinned = STATE.pinnedCard === cardKey;
-      const liked = STATE.wishlist.includes(cardKey);
-      const imgStyle = getCardImageStyle(cardKey);
-      gridHtml += `<div class="card-slot ${owned ? 'owned' : ''}" data-card-key="${cardKey}" style="${imgStyle} background-size:cover; background-position:center;">
-        <span class="pin-icon material-symbols-outlined" data-pin-key="${cardKey}" style="color:${pinned ? '#D3542B' : '#A1A1AA'};">push_pin</span>
-        ${liked ? '<span class="like material-symbols-outlined" style="color:#D3542B;">favorite</span>' : ''}
-        ${transitStatus ? `<span class="transit-badge" style="background:${transitStatus==='ordered'?'#FFF3E0':transitStatus==='paid'?'#FFF3E0':'#E8F5E9'}; color:${transitStatus==='ordered'?'#E65100':transitStatus==='paid'?'#E65100':'#1B5E20'};"><span class="material-symbols-outlined" style="font-size:0.7rem;">local_shipping</span> ${transitStatus==='ordered'?'Заказана':transitStatus==='paid'?'Оплачена':'В пути'}</span>` : ''}
-      </div>`;
-    });
-    gridHtml += '</div>';
-
-    let pagination = '';
-    if (totalPages > 1) {
-      pagination = `<div style="display:flex; justify-content:center; margin-top:8px; gap:8px;">
-        <button class="btn small" id="prevPage" ${b.page === 0 ? 'disabled' : ''}>←</button>
-        <span style="line-height:2;">${b.page+1}/${totalPages}</span>
-        <button class="btn small" id="nextPage" ${b.page === totalPages-1 ? 'disabled' : ''}>→</button>
-      </div>`;
-    }
-    document.getElementById('mainContent').innerHTML = gridHtml + pagination;
-    document.getElementById('prevPage')?.addEventListener('click', () => { b.page--; render(); });
-    document.getElementById('nextPage')?.addEventListener('click', () => { b.page++; render(); });
-
-    document.querySelectorAll('.card-slot[data-card-key]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        if (e.target.classList.contains('pin-icon') || e.target.closest('.pin-icon')) return;
-        showCardDetail(el.dataset.cardKey);
+    document.getElementById('mainContent').innerHTML = html || '<div style="color:#A1A1AA;">Нет полученных карт</div>';
+    document.querySelectorAll('[data-card-id]').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = STATE.cards.findIndex(c => c.id === el.dataset.cardId);
+        if (idx > -1) showCardDetail(idx);
       });
     });
-    document.querySelectorAll('.pin-icon').forEach(icon => {
-      icon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const key = icon.dataset.pinKey;
-        STATE.pinnedCard = (STATE.pinnedCard === key) ? null : key;
-        document.querySelectorAll('.pin-icon').forEach(ic => {
-          ic.style.color = (ic.dataset.pinKey === STATE.pinnedCard) ? '#D3542B' : '#A1A1AA';
-        });
-      });
-    });
-  }
-
-  function showCardDetail(cardKey) {
-    const card = STATE.cards[cardKey];
-    if (!card) return;
-    const overlay = document.createElement('div');
-    overlay.className = 'overlay';
-    overlay.innerHTML = `
-      <div class="dialog">
-        <h4>${getCardDisplayName(cardKey)}</h4>
-        <div style="margin:6px 0;"><input type="checkbox" ${card.owned ? 'checked' : ''} id="ownedToggle"> Получена</div>
-        ${card.owned ? '<button class="btn small danger" id="cancelOwnedBtn">Отменить получение</button>' : ''}
-        <div style="margin:6px 0;"><button class="btn small" id="toggleLikeBtn"><span class="material-symbols-outlined">favorite</span> ${STATE.wishlist.includes(cardKey) ? 'Убрать' : 'В вишлист'}</button></div>
-        <div style="margin:6px 0;"><button class="btn small" id="addDupeBtn"><span class="material-symbols-outlined">add</span> Дубликат</button></div>
-        <div>Дубликатов: ${card.dupes.length}</div>
-        ${card.dupes.map((d,i) => `<div style="font-size:0.7rem;">Дубль ${i+1}: ${d.source||'-'} ${d.price||''}₽</div>`).join('')}
-        <div style="margin:6px 0;"><button class="btn small" id="transitBtn"><span class="material-symbols-outlined">local_shipping</span> В путь</button></div>
-        ${!card.owned ? '<button class="btn small" id="gotItBtn"><span class="material-symbols-outlined">check</span> Я получил(а)!</button>' : ''}
-        <button class="btn small outline" id="closeDialog" style="margin-top:10px; width:100%;">Закрыть</button>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-    overlay.querySelector('#closeDialog').addEventListener('click', () => overlay.remove());
-    overlay.querySelector('#ownedToggle').addEventListener('change', e => {
-      card.owned = e.target.checked;
-      if (!card.owned) card.dupes = [];
-      addRecentAction(card.owned ? '✅ Получена карта' : '❌ Отменена', cardKey);
-      saveState(); render(); overlay.remove();
-    });
-    overlay.querySelector('#cancelOwnedBtn')?.addEventListener('click', () => {
-      if (confirm('Отменить получение?')) { card.owned = false; saveState(); render(); overlay.remove(); }
-    });
-    overlay.querySelector('#toggleLikeBtn').addEventListener('click', () => {
-      const idx = STATE.wishlist.indexOf(cardKey);
-      if (idx > -1) STATE.wishlist.splice(idx, 1);
-      else STATE.wishlist.push(cardKey);
-      saveState(); render(); overlay.remove();
-    });
-    overlay.querySelector('#addDupeBtn').addEventListener('click', () => {
-      const source = prompt('Откуда дубликат?');
-      const price = prompt('Цена (₽)');
-      card.dupes.push({ source: source || '', price: price || '', date: new Date().toISOString() });
-      addRecentAction('🃏 Добавлен дубликат', cardKey);
-      saveState(); render(); overlay.remove();
-    });
-    overlay.querySelector('#transitBtn').addEventListener('click', () => {
-      overlay.remove();
-      showTransitForm(cardKey);
-    });
-    overlay.querySelector('#gotItBtn')?.addEventListener('click', () => {
-      card.owned = true;
-      card.date = new Date().toISOString().slice(0,10);
-      if (card.transitStatus) {
-        STATE.transitArchive.push({ id: cardKey, seller: card.transitData?.seller, date: new Date().toISOString() });
-        card.transitStatus = null; card.transitData = null;
-      }
-      addRecentAction('✅ Получена карта', cardKey);
-      saveState(); render(); overlay.remove();
-    });
-  }
-
-  function showTransitForm(cardKey) {
-    const card = STATE.cards[cardKey];
-    if (!card) return;
-    const overlay = document.createElement('div');
-    overlay.className = 'overlay';
-    overlay.innerHTML = `
-      <div class="dialog">
-        <h4><span class="material-symbols-outlined">local_shipping</span> В путь</h4>
-        <input id="sellerInput" placeholder="Продавец" style="width:100%; margin:4px 0; padding:8px; border-radius:12px; border:1px solid #E0E0E0;">
-        <input id="priceInput" placeholder="Цена" style="width:100%; margin:4px 0; padding:8px; border-radius:12px; border:1px solid #E0E0E0;">
-        <div style="margin:6px 0;">Статус:
-          <button class="status-btn" data-status="ordered">🟡 Заказана</button>
-          <button class="status-btn" data-status="paid">🟠 Оплачена</button>
-          <button class="status-btn" data-status="shipped">🟢 Отправлена</button>
-        </div>
-        <button class="btn" id="saveTransit">Сохранить</button>
-        <button class="btn small outline" id="cancelTransit">Отмена</button>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-    let sel = 'ordered';
-    overlay.querySelectorAll('.status-btn').forEach(b => b.addEventListener('click', () => { sel = b.dataset.status; }));
-    overlay.querySelector('#saveTransit').addEventListener('click', () => {
-      const seller = overlay.querySelector('#sellerInput').value.trim();
-      if (!seller) return alert('Введите продавца');
-      card.transitStatus = sel;
-      card.transitData = { seller, price: overlay.querySelector('#priceInput').value, date: new Date().toISOString() };
-      card.statusHistory = [{ status: sel, date: new Date().toISOString() }];
-      addRecentAction('🚚 В путь', cardKey);
-      saveState(); render(); overlay.remove();
-    });
-    overlay.querySelector('#cancelTransit').addEventListener('click', () => overlay.remove());
   }
 
   function renderWishlist() {
     setHeader('Вишлист');
-    const html = STATE.wishlist.map(key => {
-      const card = STATE.cards[key];
-      if (!card) return '';
-      const transit = card.transitStatus ? '<span class="material-symbols-outlined" style="font-size:0.9rem; color:#D3542B;">local_shipping</span>' : '';
-      const imgStyle = getCardImageStyle(key);
-      return `<div class="card-cell" data-card-key="${key}">
-        <div style="width:45px; height:68px; border-radius:8px; ${imgStyle} background-size:cover; background-color:#F6F6F8; flex-shrink:0;"></div>
-        <div style="flex:1;">${getCardDisplayName(key)} ${transit}</div>
-      </div>`;
-    }).join('');
-    document.getElementById('mainContent').innerHTML = `<div class="card-grid">${html || 'Нет залайканных карт'}</div>`;
-    document.querySelectorAll('.card-cell[data-card-key]').forEach(el => {
-      el.addEventListener('click', () => showCardDetail(el.dataset.cardKey));
-    });
-  }
-
-  function renderDuplicates() {
-    setHeader('Дубликаты');
-    let html = '';
-    Object.entries(STATE.cards).forEach(([key, card]) => {
-      if (key === '_init' || !card.dupes.length) return;
-      card.dupes.forEach((d, i) => {
-        const imgStyle = getCardImageStyle(key);
-        html += `<div class="card-cell">
-          <div style="width:45px; height:68px; border-radius:8px; ${imgStyle} background-size:cover; background-color:#F6F6F8; flex-shrink:0;"></div>
-          <div>${getCardDisplayName(key)}<br>дубль ${i+1} · ${d.source||'-'} ${d.price||''}₽</div>
-        </div>`;
-      });
-    });
-    document.getElementById('mainContent').innerHTML = html || 'Нет дубликатов';
-  }
-
-  function renderTransit() {
-    setHeader('В пути');
-    const active = Object.entries(STATE.cards).filter(([k, c]) => c.transitStatus);
-    let html = active.map(([key, card]) => {
-      const statusColor = card.transitStatus === 'ordered' ? '#E65100' : card.transitStatus === 'paid' ? '#E65100' : '#1B5E20';
-      const bgColor = card.transitStatus === 'ordered' ? '#FFF3E0' : card.transitStatus === 'paid' ? '#FFF3E0' : '#E8F5E9';
-      const statusText = card.transitStatus === 'ordered' ? 'Заказана' : card.transitStatus === 'paid' ? 'Оплачена' : 'Отправлена';
-      const days = Math.floor((Date.now() - new Date(card.transitData.date)) / 86400000);
-      const imgStyle = getCardImageStyle(key);
-      return `<div class="card-cell" data-transit-key="${key}">
-        <div style="width:45px; height:68px; border-radius:8px; ${imgStyle} background-size:cover; background-color:#F6F6F8; flex-shrink:0;"></div>
-        <div>
-          <span style="background:${bgColor}; color:${statusColor}; border-radius:8px; padding:2px 6px; font-size:0.6rem;">${statusText}</span><br>
-          ${getCardDisplayName(key)}<br>
-          <span class="material-symbols-outlined" style="font-size:0.7rem;">person</span> ${card.transitData.seller}<br>
-          ${days} дн.
-          <button class="btn small change-status-btn" data-id="${key}" style="margin-top:4px; display:block;">Сменить статус</button>
+    let html = '<button class="btn" id="addWishBtn" style="width:100%; margin-bottom:10px;">+ Добавить в вишлист</button>';
+    html += STATE.wishlist.map((w, i) => `
+      <div class="card-cell">
+        ${w.imageFront ? `<div class="custom-card-image-small" style="background-image:url('${w.imageFront}'); background-size:cover;"></div>` : ''}
+        <div style="flex:1;">
+          <b>${w.group||'—'} · ${w.member||'—'}</b><br>
+          <span style="font-size:0.65rem;">${w.album||''} · ${w.note||''}</span>
         </div>
-      </div>`;
-    }).join('');
-    html += '<h4 style="font-family:Lora; margin-top:12px;">Архив</h4>';
-    html += STATE.transitArchive.map(a => {
-      const imgStyle = getCardImageStyle(a.id);
-      return `<div class="card-cell" style="opacity:0.7;">
-        <div style="width:45px; height:68px; border-radius:8px; ${imgStyle} background-size:cover; background-color:#F6F6F8;"></div>
-        <div>✅ ${getCardDisplayName(a.id)} — ${a.seller||'—'}</div>
-      </div>`;
-    }).join('');
-    document.getElementById('mainContent').innerHTML = html || 'Нет активных заказов';
-    document.querySelectorAll('[data-transit-key]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        if (e.target.classList.contains('change-status-btn')) return;
-        showTransitDetail(el.dataset.transitKey);
-      });
-    });
-    document.querySelectorAll('.change-status-btn').forEach(btn => {
+        <button class="btn small order-wish-btn" data-index="${i}">📦 Заказать</button>
+      </div>
+    `).join('');
+    document.getElementById('mainContent').innerHTML = html || 'Вишлист пуст';
+    document.getElementById('addWishBtn')?.addEventListener('click', () => showAddWishDialog());
+    document.querySelectorAll('.order-wish-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        changeTransitStatus(btn.dataset.id);
+        const idx = parseInt(btn.dataset.index);
+        const w = STATE.wishlist[idx];
+        STATE.cards.push({
+          id: generateId(), group: w.group, member: w.member, album: w.album,
+          seller: '', price: '', defects: '', date: '',
+          imageFront: w.imageFront || '', imageBack: '',
+          status: 'ordered', statusDate: new Date().toISOString(),
+          statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
+        });
+        STATE.wishlist.splice(idx, 1);
+        addRecentAction(`📦 Из вишлиста: ${w.group} — ${w.member}`);
+        saveState(); render();
       });
     });
   }
 
-  function showTransitDetail(cardKey) {
-    const card = STATE.cards[cardKey];
-    if (!card?.transitData) return;
+  function showAddWishDialog() {
     const overlay = document.createElement('div');
     overlay.className = 'overlay';
     overlay.innerHTML = `
       <div class="dialog">
-        <h4>Заказ</h4>
-        <div><span class="material-symbols-outlined">person</span> ${card.transitData.seller}</div>
-        <div><span class="material-symbols-outlined">payments</span> ${card.transitData.price} ₽</div>
-        <div>История: ${(card.statusHistory||[]).map(h => h.status).join(' → ')}</div>
-        <button class="btn small" id="changeStatus"><span class="material-symbols-outlined">swap_horiz</span> Сменить статус</button>
-        <button class="btn small outline" id="closeDetail">Закрыть</button>
+        <h4>💖 В вишлист</h4>
+        <input class="input-field" id="wishGroup" placeholder="Группа">
+        <input class="input-field" id="wishMember" placeholder="Участник">
+        <input class="input-field" id="wishAlbum" placeholder="Альбом">
+        <input class="input-field" id="wishNote" placeholder="Заметка (необязательно)">
+        <label style="font-size:0.7rem;">Фото (необязательно):</label>
+        <input type="file" id="wishImage" accept="image/*" class="input-field">
+        <button class="btn" id="saveWishBtn" style="width:100%; margin-top:10px;">Сохранить</button>
+        <button class="btn small outline" id="cancelWishBtn" style="width:100%; margin-top:4px;">Отмена</button>
       </div>
     `;
     document.body.appendChild(overlay);
-    overlay.querySelector('#closeDetail').addEventListener('click', () => overlay.remove());
-    overlay.querySelector('#changeStatus').addEventListener('click', () => {
-      overlay.remove();
-      changeTransitStatus(cardKey);
-    });
-  }
-
-  function changeTransitStatus(cardKey) {
-    const card = STATE.cards[cardKey];
-    if (!card) return;
-    const overlay = document.createElement('div');
-    overlay.className = 'overlay';
-    overlay.innerHTML = `
-      <div class="dialog">
-        <button class="status-btn" data-status="ordered">🟡 Заказана</button>
-        <button class="status-btn" data-status="paid">🟠 Оплачена</button>
-        <button class="status-btn" data-status="shipped">🟢 Отправлена</button>
-        <button class="btn small outline" id="cancelStatus">Отмена</button>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-    overlay.querySelectorAll('.status-btn').forEach(b => {
-      b.addEventListener('click', () => {
-        card.statusHistory.push({ status: b.dataset.status, date: new Date().toISOString() });
-        card.transitStatus = b.dataset.status;
+    overlay.querySelector('#saveWishBtn').addEventListener('click', () => {
+      const group = overlay.querySelector('#wishGroup').value.trim();
+      const member = overlay.querySelector('#wishMember').value.trim();
+      if (!group || !member) return alert('Введите группу и участника');
+      const file = overlay.querySelector('#wishImage').files[0];
+      const saveWish = (img) => {
+        STATE.wishlist.push({
+          id: generateId(), group, member,
+          album: overlay.querySelector('#wishAlbum').value.trim(),
+          note: overlay.querySelector('#wishNote').value.trim(),
+          imageFront: img || ''
+        });
         saveState(); render(); overlay.remove();
-      });
+      };
+      if (file) { const r = new FileReader(); r.onload = e => saveWish(e.target.result); r.readAsDataURL(file); }
+      else saveWish('');
     });
-    overlay.querySelector('#cancelStatus').addEventListener('click', () => overlay.remove());
+    overlay.querySelector('#cancelWishBtn').addEventListener('click', () => overlay.remove());
+  }
+
+  function renderSettings() {
+    setHeader('Настройки');
+    document.getElementById('mainContent').innerHTML = `
+      <div style="text-align:center; color:#A1A1AA; padding:40px;">
+        <span class="material-symbols-outlined" style="font-size:3rem;">settings</span>
+        <p>Настройки скоро появятся</p>
+        <button class="btn small" id="backFromSettings">← На главную</button>
+      </div>
+    `;
+    document.getElementById('backFromSettings').addEventListener('click', () => { STATE.activeTab = 'home'; render(); });
   }
 
   loadState();
