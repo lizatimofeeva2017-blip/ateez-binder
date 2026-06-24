@@ -3,46 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>ATEEZ Binder</title>
+  <title>Биндер</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..600&family=Lora:ital,wght@0,600;1,600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400..700;1,400..700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #E8E8ED;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #1a1a2e;
+      font-family: 'Nunito', system-ui, sans-serif;
       display: flex; justify-content: center; align-items: center;
       min-height: 100vh; padding: 0; margin: 0;
     }
     .app-container {
       width: 100%; max-width: 420px; background: #F6F6F8;
-      box-shadow: 0 0 40px rgba(0,0,0,0.08); overflow: hidden;
+      background-image: radial-gradient(circle at 20% 30%, rgba(255,215,0,0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(255,180,100,0.04) 0%, transparent 50%),
+                        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D3542B' fill-opacity='0.03'%3E%3Cpolygon points='40,5 48,28 72,28 52,42 60,65 40,50 20,65 28,42 8,28 32,28'/%3E%3C/g%3E%3C/svg%3E");
+      box-shadow: 0 0 40px rgba(0,0,0,0.2); overflow: hidden;
       display: flex; flex-direction: column; height: 100vh; max-height: 820px;
     }
     .header {
-      background: #FFFFFF; padding: 14px 16px; color: #2B2B2B;
-      font-weight: 600; font-size: 1rem; display: flex;
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+      padding: 12px 16px; color: #2B2B2B;
+      font-weight: 700; font-size: 1.1rem; display: flex;
       align-items: center; justify-content: space-between; flex-shrink: 0;
-      border-bottom: 1px solid rgba(0,0,0,0.04); font-family: 'Lora', serif;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
     }
-    .header-left { display: flex; align-items: center; gap: 8px; }
+    .header-left { display: flex; align-items: center; gap: 6px; }
     .back-btn {
       background: none; border: none; color: #D3542B; font-size: 1rem;
-      font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px;
+      font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 8px;
     }
     .main-content {
-      flex: 1; overflow-y: auto; padding: 12px; background: #F6F6F8;
+      flex: 1; overflow-y: auto; padding: 12px; background: transparent;
       -webkit-overflow-scrolling: touch;
     }
     .bottom-nav {
       display: flex; justify-content: space-around; align-items: center;
-      background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.04);
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0,0,0,0.04);
       padding: 8px 0 12px; flex-shrink: 0; overflow-x: auto;
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center;
-      gap: 2px; color: #A1A1AA; font-size: 0.6rem; font-weight: 500;
+      gap: 2px; color: #A1A1AA; font-size: 0.6rem; font-weight: 600;
       cursor: pointer; padding: 4px 8px; border-radius: 14px; transition: 0.2s;
       position: relative; white-space: nowrap;
     }
@@ -50,43 +55,45 @@
     .nav-icon { font-size: 1.3rem; line-height: 1; }
     .badge {
       background: #D3542B; color: #FFFFFF; border-radius: 10px;
-      padding: 0 5px; font-size: 0.55rem; font-weight: 600;
+      padding: 0 5px; font-size: 0.55rem; font-weight: 700;
       position: absolute; top: -2px; right: -2px;
     }
     .btn {
       background: #D3542B; border: none; padding: 8px 14px;
-      border-radius: 16px; font-weight: 600; font-size: 0.75rem;
+      border-radius: 16px; font-weight: 700; font-size: 0.75rem;
       color: #FFFFFF; cursor: pointer; transition: 0.2s;
     }
+    .btn:active { transform: scale(0.96); }
     .btn.small { padding: 4px 10px; font-size: 0.7rem; }
     .btn.outline { background: transparent; border: 1px solid #D3542B; color: #D3542B; }
-    .dialog {
-      background: #FFFFFF; border-radius: 22px; padding: 24px;
-      width: 90%; max-width: 340px; color: #2B2B2B;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-      max-height: 80vh; overflow-y: auto;
-    }
-    .dialog h4 { font-family: 'Lora', serif; font-size: 1rem; margin-bottom: 12px; }
     .input-field {
       width: 100%; margin: 4px 0; padding: 8px; border-radius: 12px;
-      border: 1px solid #E0E0E0; font-size: 0.8rem;
+      border: 1px solid #E0E0E0; font-size: 0.8rem; background: #FFFFFF;
+      font-family: 'Nunito', sans-serif;
     }
+    select.input-field { appearance: auto; }
     .chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0; }
     .chip-select {
       padding: 6px 12px; border-radius: 20px; font-size: 0.7rem;
       background: #F6F6F8; color: #2B2B2B; cursor: pointer;
-      border: 1px solid rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.04); font-weight: 600;
     }
     .chip-select.active { background: #D3542B; color: #FFFFFF; border-color: #D3542B; }
     .toast {
       position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
       background: #2B2B2B; color: #FFFFFF; padding: 12px 24px;
-      border-radius: 20px; font-size: 0.8rem; z-index: 200;
+      border-radius: 20px; font-size: 0.8rem; z-index: 200; font-weight: 600;
     }
     .overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 100;
       display: flex; align-items: center; justify-content: center;
+    }
+    .dialog {
+      background: #FFFFFF; border-radius: 22px; padding: 24px;
+      width: 90%; max-width: 340px; color: #2B2B2B;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      max-height: 80vh; overflow-y: auto;
     }
     .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .card-cell {
@@ -95,6 +102,7 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.04); transition: 0.2s;
       display: flex; align-items: center; gap: 8px;
     }
+    .card-cell:active { background: #F6F6F8; }
     .feed-item {
       background: #FFFFFF; border-radius: 18px; overflow: hidden;
       margin-bottom: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);
@@ -106,8 +114,8 @@
       padding: 10px; text-align: center;
       box-shadow: 0 4px 14px rgba(0,0,0,0.04);
     }
-    .stat-box .stat-num { font-size: 1.2rem; font-weight: 600; }
-    .stat-box .stat-label { font-size: 0.6rem; color: #A1A1AA; margin-top: 2px; }
+    .stat-box .stat-num { font-size: 1.2rem; font-weight: 700; }
+    .stat-box .stat-label { font-size: 0.6rem; color: #A1A1AA; margin-top: 2px; font-weight: 600; }
     .widget-row { display: flex; gap: 8px; margin: 10px 0; }
     .widget-card {
       flex: 1; background: #FFFFFF; border-radius: 14px;
@@ -115,11 +123,11 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.03);
     }
     .widget-card .widget-number { font-size: 1.3rem; font-weight: 700; }
-    .widget-card .widget-label { font-size: 0.6rem; color: #A1A1AA; margin-top: 2px; }
+    .widget-card .widget-label { font-size: 0.6rem; color: #A1A1AA; margin-top: 2px; font-weight: 600; }
     .big-transit-banner {
       background: #D3542B; color: #FFFFFF; border-radius: 16px;
       padding: 16px; text-align: center; margin-bottom: 12px;
-      font-size: 1rem; font-weight: 600;
+      font-size: 1rem; font-weight: 700;
     }
     .finance-block {
       background: #FFFFFF; border-radius: 16px;
@@ -130,11 +138,11 @@
     .finance-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem; color: #2B2B2B; }
     .collapse-icon { transition: transform 0.3s; font-size: 0.9rem; color: #A1A1AA; }
     .collapse-icon.open { transform: rotate(180deg); }
-    .section-title { color: #2B2B2B; font-family: 'Lora', serif; font-size: 0.85rem; margin: 10px 0 6px; }
+    .section-title { color: #2B2B2B; font-size: 0.85rem; margin: 10px 0 6px; font-weight: 700; }
     .search-input {
       width: 100%; padding: 10px; border-radius: 14px;
       border: 1px solid rgba(0,0,0,0.06); background: #FFFFFF;
-      font-size: 0.8rem; margin-bottom: 10px;
+      font-size: 0.8rem; margin-bottom: 10px; font-family: 'Nunito', sans-serif;
     }
     .custom-card-images { display: flex; gap: 4px; flex-shrink: 0; }
     .custom-card-image-small {
@@ -142,9 +150,48 @@
       background-size: cover; background-position: center;
       background-color: #F6F6F8;
     }
+    .person-avatar {
+      width: 40px; height: 40px; border-radius: 20px;
+      background-size: cover; background-position: center;
+      background-color: #F6F6F8; flex-shrink: 0;
+    }
+    .person-avatar.large {
+      width: 70px; height: 70px; border-radius: 35px;
+      margin: 0 auto 10px;
+    }
+    .star-rating { color: #FFB800; font-size: 1rem; letter-spacing: 2px; }
     .add-form {
       background: #FFFFFF; border-radius: 16px; padding: 14px;
       margin-bottom: 10px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    .chat-item {
+      display: flex; align-items: center; gap: 10px; padding: 12px;
+      background: #FFFFFF; border-radius: 14px; margin-bottom: 6px;
+      cursor: pointer; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .chat-item:active { background: #F6F6F8; }
+    .profile-header {
+      text-align: center; padding: 20px; background: #FFFFFF;
+      border-radius: 18px; margin-bottom: 12px;
+    }
+    .seller-feed {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;
+    }
+    .seller-feed-item {
+      aspect-ratio: 2/3; border-radius: 12px;
+      background-size: cover; background-position: center;
+      background-color: #F6F6F8; position: relative; cursor: pointer;
+    }
+    .seller-feed-item .caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.5); color: #FFFFFF;
+      padding: 4px 6px; font-size: 0.55rem; font-weight: 600;
+      border-radius: 0 0 12px 12px;
+    }
+    .limit-bar {
+      background: #FFFFFF; border-radius: 12px; padding: 8px 12px;
+      margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      font-size: 0.7rem; text-align: center;
     }
     @media (max-width: 400px) {
       .nav-item { padding: 2px 4px; font-size: 0.55rem; }
@@ -156,25 +203,41 @@
 </head>
 <body>
 <div class="app-container" id="app">
+  <audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="header" id="header">
-    <div class="header-left"><span class="header-title">🏴‍☠️ ATEEZ BINDER</span></div>
-    <div id="headerAction"><span class="material-symbols-outlined" style="cursor:pointer;">settings</span></div>
+    <div class="header-left">
+      <span class="header-title">📒 Биндер</span>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <span class="material-symbols-outlined" id="musicToggle" style="cursor:pointer;">volume_up</span>
+      <span class="material-symbols-outlined" id="settingsBtn" style="cursor:pointer;">settings</span>
+      <span class="material-symbols-outlined" id="profileBtn" style="cursor:pointer;">account_circle</span>
+    </div>
   </div>
   <div class="main-content" id="mainContent"></div>
   <div class="bottom-nav" id="bottomNav"></div>
 </div>
 
 <script>
+  // ========== СОСТОЯНИЕ ==========
   const STATE = {
     activeTab: 'home',
     cards: [],
     wishlist: [],
+    sellers: [],
+    archive: [],
     recentActions: [],
     financeExpanded: true,
     cardFilter: 'all',
     cardSearch: '',
     cardGroupFilter: 'all',
-    showAddForm: false
+    showAddForm: false,
+    profile: { name: '', avatar: '' },
+    settings: { sound: true, language: 'ru', musicVolume: 0.3 },
+    binderSlots: 50
   };
 
   const GROUPS = {
@@ -208,31 +271,293 @@
     }
   };
 
+  let customGroups = {};
+
+  function getAllGroups() {
+    return { ...GROUPS, ...customGroups };
+  }
+
   function generateId() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
 
+  // ========== ПЕРЕВОДЫ ==========
+  const LANG = {
+    ru: {
+      binder: '📒 Биндер',
+      home: 'Главная',
+      myCards: 'Мои карты',
+      wishlist: 'Вишлист',
+      sellers: 'Продавцы',
+      profile: 'Профиль',
+      settings: 'Настройки',
+      addCard: '+ Добавить карту',
+      addToWishlist: '+ Добавить в вишлист',
+      search: '🔍 Поиск...',
+      all: 'Все',
+      ordered: 'Заказана',
+      paid: 'Оплачена',
+      shipped: 'Отправлена',
+      received: 'Получена',
+      allGroups: 'Все группы',
+      save: 'Сохранить',
+      cancel: 'Отмена',
+      edit: '✏️ Редактировать',
+      delete: '🗑️ Удалить',
+      close: 'Закрыть',
+      transit: '🚚 карт в пути',
+      collected: 'Получено',
+      inTransit: 'В пути',
+      wishlistCount: 'Вишлист',
+      toMe: '🚚 Ко мне',
+      fromMe: '📤 От меня',
+      finances: '💰 Финансы',
+      spent: 'Потрачено',
+      recentActions: '🕒 Недавние действия',
+      archive: '📦 Архив сделок',
+      archiveUnavailable: 'Временно недоступен',
+      noCards: 'Нет карт',
+      noReceived: 'Нет полученных карт',
+      noSellers: 'Нет продавцов. Добавьте первого через добавление карты.',
+      emptyWishlist: 'Вишлист пуст',
+      group: 'Группа',
+      member: 'Участник',
+      album: 'Альбом',
+      seller: 'Продавец',
+      selectSeller: 'Выберите продавца',
+      newSeller: 'Или впишите нового продавца',
+      price: 'Цена (₽)',
+      track: 'Трек-номер (необязательно)',
+      defects: 'Дефекты (если есть)',
+      date: 'Дата покупки',
+      photoFront: 'Фото лицевой стороны',
+      photoBack: 'Фото задника',
+      saveCard: 'Сохранить карту',
+      addGroup: 'Или добавьте свою группу',
+      addAlbum: 'Или впишите свой альбом',
+      addMember: '+ Добавить участника',
+      selectAlbum: 'Выберите альбом из сохранённых',
+      reviews: '📝 Отзывы (для себя)',
+      noReviews: 'Нет отзывов',
+      leaveReview: '+ Оставить отзыв',
+      feed: '📦 Лента покупок',
+      rating: '⭐ Отзыв на',
+      forSelf: '(для себя)',
+      notes: '✏️ Заметки',
+      sound: '🔊 Фоновая музыка',
+      language: '🌐 Язык',
+      resetData: '🗑️ Сбросить все данные',
+      backToHome: '← На главную',
+      order: '📦 Заказать',
+      share: '📤',
+      cardAdded: 'Карта добавлена!',
+      selectMember: 'Выберите участника',
+      deleteReason: 'Причина удаления (отказались, ошибка, другое):',
+      sellerAdded: 'Продавец добавлен!',
+      editCard: '✏️ Редактировать',
+      statusChanged: '🔄 Статус изменён',
+      cardDeleted: '🗑️ Карта удалена',
+      limitReached: 'Достигнут лимит в 50 карт! Посмотрите рекламу, чтобы получить +10 мест.',
+      limitInfo: 'Занято {used}/{total} мест',
+      expandBinder: '📺 +10 мест за рекламу',
+      musicVolume: '🎚️ Громкость музыки',
+      exportData: '📥 Экспорт данных',
+      importData: '📤 Импорт данных',
+      dataExported: 'Данные экспортированы!',
+      dataImported: 'Данные импортированы!',
+      importError: 'Ошибка импорта. Проверьте файл.',
+      slotsAdded: '+10 мест! Теперь у вас {total} слотов.',
+    },
+    en: {
+      binder: '📒 Binder',
+      home: 'Home',
+      myCards: 'My Cards',
+      wishlist: 'Wishlist',
+      sellers: 'Sellers',
+      profile: 'Profile',
+      settings: 'Settings',
+      addCard: '+ Add Card',
+      addToWishlist: '+ Add to Wishlist',
+      search: '🔍 Search...',
+      all: 'All',
+      ordered: 'Ordered',
+      paid: 'Paid',
+      shipped: 'Shipped',
+      received: 'Received',
+      allGroups: 'All Groups',
+      save: 'Save',
+      cancel: 'Cancel',
+      edit: '✏️ Edit',
+      delete: '🗑️ Delete',
+      close: 'Close',
+      transit: '🚚 cards in transit',
+      collected: 'Collected',
+      inTransit: 'In Transit',
+      wishlistCount: 'Wishlist',
+      toMe: '🚚 To Me',
+      fromMe: '📤 From Me',
+      finances: '💰 Finances',
+      spent: 'Spent',
+      recentActions: '🕒 Recent Actions',
+      archive: '📦 Deal Archive',
+      archiveUnavailable: 'Temporarily unavailable',
+      noCards: 'No cards',
+      noReceived: 'No received cards',
+      noSellers: 'No sellers. Add your first via card addition.',
+      emptyWishlist: 'Wishlist is empty',
+      group: 'Group',
+      member: 'Member',
+      album: 'Album',
+      seller: 'Seller',
+      selectSeller: 'Select seller',
+      newSeller: 'Or enter new seller',
+      price: 'Price (₽)',
+      track: 'Tracking number (optional)',
+      defects: 'Defects (if any)',
+      date: 'Purchase date',
+      photoFront: 'Front photo',
+      photoBack: 'Back photo',
+      saveCard: 'Save Card',
+      addGroup: 'Or add your own group',
+      addAlbum: 'Or enter your own album',
+      addMember: '+ Add Member',
+      selectAlbum: 'Select saved album',
+      reviews: '📝 Reviews (for self)',
+      noReviews: 'No reviews',
+      leaveReview: '+ Leave a Review',
+      feed: '📦 Purchase Feed',
+      rating: '⭐ Review for',
+      forSelf: '(for self)',
+      notes: '✏️ Notes',
+      sound: '🔊 Background Music',
+      language: '🌐 Language',
+      resetData: '🗑️ Reset All Data',
+      backToHome: '← Back to Home',
+      order: '📦 Order',
+      share: '📤',
+      cardAdded: 'Card added!',
+      selectMember: 'Select a member',
+      deleteReason: 'Deletion reason (refused, error, other):',
+      sellerAdded: 'Seller added!',
+      editCard: '✏️ Edit',
+      statusChanged: '🔄 Status changed',
+      cardDeleted: '🗑️ Card deleted',
+      limitReached: '50 card limit reached! Watch an ad to get +10 slots.',
+      limitInfo: 'Used {used}/{total} slots',
+      expandBinder: '📺 +10 slots for an ad',
+      musicVolume: '🎚️ Music Volume',
+      exportData: '📥 Export Data',
+      importData: '📤 Import Data',
+      dataExported: 'Data exported!',
+      dataImported: 'Data imported!',
+      importError: 'Import error. Check the file.',
+      slotsAdded: '+10 slots! You now have {total} slots.',
+    }
+  };
+
+  function t(key, replacements = {}) {
+    const lang = STATE.settings.language || 'ru';
+    let text = LANG[lang]?.[key] || LANG['ru'][key] || key;
+    Object.entries(replacements).forEach(([k, v]) => {
+      text = text.replace(`{${k}}`, v);
+    });
+    return text;
+  }
+
+  // ========== АУДИО ==========
+  const bgMusic = document.getElementById('bgMusic');
+  bgMusic.volume = STATE.settings.musicVolume || 0.3;
+
+  function updateMusicIcon() {
+    const icon = document.getElementById('musicToggle');
+    if (icon) {
+      icon.textContent = STATE.settings.sound ? 'volume_up' : 'volume_off';
+    }
+  }
+
+  document.getElementById('musicToggle').addEventListener('click', () => {
+    STATE.settings.sound = !STATE.settings.sound;
+    if (STATE.settings.sound) {
+      bgMusic.play().catch(() => {});
+    } else {
+      bgMusic.pause();
+    }
+    updateMusicIcon();
+    saveState();
+  });
+
+  document.addEventListener('click', () => {
+    if (STATE.settings.sound && bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+  }, { once: true });
+
+  // ========== ЗАГРУЗКА / СОХРАНЕНИЕ ==========
   function loadState() {
-    const saved = localStorage.getItem('ateez_binder_final');
+    const saved = localStorage.getItem('inteox_data');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         STATE.cards = parsed.cards || [];
         STATE.wishlist = parsed.wishlist || [];
+        STATE.sellers = parsed.sellers || [];
+        STATE.archive = parsed.archive || [];
         STATE.recentActions = parsed.recentActions || [];
         STATE.financeExpanded = parsed.financeExpanded !== undefined ? parsed.financeExpanded : true;
         STATE.cardFilter = parsed.cardFilter || 'all';
         STATE.cardSearch = parsed.cardSearch || '';
         STATE.cardGroupFilter = parsed.cardGroupFilter || 'all';
         STATE.showAddForm = false;
+        STATE.profile = parsed.profile || { name: '', avatar: '' };
+        STATE.settings = parsed.settings || { sound: true, language: 'ru', musicVolume: 0.3 };
+        STATE.binderSlots = parsed.binderSlots || 50;
+        customGroups = parsed.customGroups || {};
       } catch(e) {}
     }
+    bgMusic.volume = STATE.settings.musicVolume || 0.3;
+    updateMusicIcon();
   }
 
   function saveState() {
-    localStorage.setItem('ateez_binder_final', JSON.stringify(STATE));
+    localStorage.setItem('inteox_data', JSON.stringify({ ...STATE, customGroups }));
   }
 
-  function addRecentAction(text) {
-    STATE.recentActions.unshift({ text, date: new Date().toISOString() });
+  function exportData() {
+    const data = JSON.stringify({ ...STATE, customGroups }, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'binder_backup_' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast(t('dataExported'));
+  }
+
+  function importData(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        STATE.cards = data.cards || [];
+        STATE.wishlist = data.wishlist || [];
+        STATE.sellers = data.sellers || [];
+        STATE.archive = data.archive || [];
+        STATE.recentActions = data.recentActions || [];
+        STATE.profile = data.profile || { name: '', avatar: '' };
+        STATE.settings = data.settings || { sound: true, language: 'ru', musicVolume: 0.3 };
+        STATE.binderSlots = data.binderSlots || 50;
+        customGroups = data.customGroups || {};
+        saveState();
+        render();
+        showToast(t('dataImported'));
+      } catch(err) {
+        showToast(t('importError'));
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function addRecentAction(text, cardId = null) {
+    STATE.recentActions.unshift({ text, cardId, date: new Date().toISOString() });
     if (STATE.recentActions.length > 50) STATE.recentActions.pop();
   }
 
@@ -247,10 +572,10 @@
 
   function getStatusInfo(status) {
     const map = {
-      ordered: { text:'Заказана', color:'#E65100', bg:'#FFF3E0' },
-      paid: { text:'Оплачена', color:'#E65100', bg:'#FFF3E0' },
-      shipped: { text:'Отправлена', color:'#1B5E20', bg:'#E8F5E9' },
-      received: { text:'Получена', color:'#2B2B2B', bg:'#F6F6F8' }
+      ordered: { text: t('ordered'), color:'#E65100', bg:'#FFF3E0' },
+      paid: { text: t('paid'), color:'#E65100', bg:'#FFF3E0' },
+      shipped: { text: t('shipped'), color:'#1B5E20', bg:'#E8F5E9' },
+      received: { text: t('received'), color:'#2B2B2B', bg:'#F6F6F8' }
     };
     return map[status] || map.ordered;
   }
@@ -262,25 +587,30 @@
       case 'cards': renderCards(); break;
       case 'binder': renderBinder(); break;
       case 'wishlist': renderWishlist(); break;
+      case 'sellers': renderSellers(); break;
+      case 'profile': renderProfile(); break;
       case 'settings': renderSettings(); break;
+      case 'sellerDetail': renderSellerDetail(); break;
     }
     saveState();
+    updateMusicIcon();
   }
 
   function renderBottomNav() {
     const nav = document.getElementById('bottomNav');
     const transitCount = STATE.cards.filter(c => c.status !== 'received').length;
     const tabs = [
-      { id: 'home', icon: 'home', label: 'Главная' },
-      { id: 'cards', icon: 'style', label: 'Мои карты' },
-      { id: 'binder', icon: 'photo_album', label: 'Биндер' },
-      { id: 'wishlist', icon: 'favorite', label: 'Вишлист' }
+      { id: 'home', icon: 'home', label: t('home') },
+      { id: 'cards', icon: 'style', label: t('myCards') },
+      { id: 'binder', icon: 'photo_album', label: t('binder') },
+      { id: 'wishlist', icon: 'favorite', label: t('wishlist') },
+      { id: 'sellers', icon: 'chat', label: t('sellers') }
     ];
-    nav.innerHTML = tabs.map(t => `
-      <div class="nav-item ${STATE.activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">
-        <span class="nav-icon material-symbols-outlined">${t.icon}</span>
-        <span>${t.label}</span>
-        ${t.id === 'cards' && transitCount > 0 ? `<span class="badge">${transitCount}</span>` : ''}
+    nav.innerHTML = tabs.map(tab => `
+      <div class="nav-item ${STATE.activeTab === tab.id ? 'active' : ''}" data-tab="${tab.id}">
+        <span class="nav-icon material-symbols-outlined">${tab.icon}</span>
+        <span>${tab.label}</span>
+        ${tab.id === 'cards' && transitCount > 0 ? `<span class="badge">${transitCount}</span>` : ''}
       </div>
     `).join('');
     nav.querySelectorAll('.nav-item').forEach(el => {
@@ -290,18 +620,13 @@
 
   function setHeader(title, showBack = false, backTab = 'home') {
     document.querySelector('.header-title').textContent = title;
-    const actionEl = document.getElementById('headerAction');
-    if (showBack) {
-      actionEl.innerHTML = '<span class="back-btn">← Назад</span>';
-      actionEl.onclick = () => { STATE.activeTab = backTab; render(); };
-    } else {
-      actionEl.innerHTML = '<span class="material-symbols-outlined" style="cursor:pointer;">settings</span>';
-      actionEl.onclick = () => { STATE.activeTab = 'settings'; render(); };
-    }
+    document.getElementById('settingsBtn').onclick = () => { STATE.activeTab = 'settings'; render(); };
+    document.getElementById('profileBtn').onclick = () => { STATE.activeTab = 'profile'; render(); };
   }
 
+  // ========== ГЛАВНАЯ ==========
   function renderHome() {
-    setHeader('🏴‍☠️ ATEEZ BINDER');
+    setHeader(t('binder'));
     const transitCount = STATE.cards.filter(c => c.status !== 'received').length;
     const receivedCount = STATE.cards.filter(c => c.status === 'received').length;
     const wishCount = STATE.wishlist.length;
@@ -309,27 +634,34 @@
     STATE.cards.forEach(c => { if (c.price) spent += Number(c.price) || 0; });
 
     document.getElementById('mainContent').innerHTML = `
-      <div class="big-transit-banner">🚚 ${transitCount} карт в пути</div>
+      <div class="big-transit-banner">🚚 ${transitCount} ${t('transit')}</div>
       <div class="stat-row">
-        <div class="stat-box"><div class="stat-num" style="color:#D3542B;">${receivedCount}</div><div class="stat-label">Получено</div></div>
-        <div class="stat-box"><div class="stat-num">${transitCount}</div><div class="stat-label">В пути</div></div>
-        <div class="stat-box"><div class="stat-num">${wishCount}</div><div class="stat-label">Вишлист</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:#D3542B;">${receivedCount}</div><div class="stat-label">${t('collected')}</div></div>
+        <div class="stat-box"><div class="stat-num">${transitCount}</div><div class="stat-label">${t('inTransit')}</div></div>
+        <div class="stat-box"><div class="stat-num">${wishCount}</div><div class="stat-label">${t('wishlistCount')}</div></div>
       </div>
       <div class="widget-row">
-        <div class="widget-card"><div class="widget-number" style="color:#D3542B;">${transitCount}</div><div class="widget-label">🚚 Ко мне</div></div>
-        <div class="widget-card"><div class="widget-number">0</div><div class="widget-label">📤 От меня</div></div>
+        <div class="widget-card"><div class="widget-number" style="color:#D3542B;">${transitCount}</div><div class="widget-label">${t('toMe')}</div></div>
+        <div class="widget-card"><div class="widget-number">0</div><div class="widget-label">${t('fromMe')}</div></div>
       </div>
       <div class="finance-block">
         <div class="finance-header" id="financeToggle">
-          <span style="font-weight:600;">💰 Финансы</span>
+          <span style="font-weight:700;">${t('finances')}</span>
           <span class="collapse-icon ${STATE.financeExpanded ? 'open' : ''}">▼</span>
         </div>
         <div id="financeBody" style="${STATE.financeExpanded ? '' : 'display:none;'}">
-          <div class="finance-row"><span>Потрачено</span><span>${spent.toLocaleString()} ₽</span></div>
+          <div class="finance-row"><span>${t('spent')}</span><span>${spent.toLocaleString()} ₽</span></div>
         </div>
       </div>
-      <h4 class="section-title">🕒 Недавние действия</h4>
-      ${STATE.recentActions.slice(0,10).map(a => `<div class="feed-item"><div class="info">${a.text}<br><span style="color:#A1A1AA; font-size:0.65rem;">${new Date(a.date).toLocaleString()}</span></div></div>`).join('') || '<div style="color:#A1A1AA;">пока пусто</div>'}
+      <h4 class="section-title">${t('recentActions')}</h4>
+      ${STATE.recentActions.slice(0,10).map(a => {
+        const card = a.cardId ? STATE.cards.find(c => c.id === a.cardId) : null;
+        const img = card?.imageFront ? `background-image:url('${card.imageFront}');` : '';
+        return `<div class="feed-item">
+          <div style="aspect-ratio:2/3; background-size:cover; background-position:center; background-color:#F6F6F8; ${img}"></div>
+          <div class="info">${a.text}<br><span style="color:#A1A1AA; font-size:0.65rem;">${new Date(a.date).toLocaleString()}</span></div>
+        </div>`;
+      }).join('') || '<div style="color:#A1A1AA;">пока пусто</div>'}
     `;
     document.getElementById('financeToggle').addEventListener('click', () => {
       STATE.financeExpanded = !STATE.financeExpanded;
@@ -338,8 +670,9 @@
     });
   }
 
+  // ========== МОИ КАРТЫ ==========
   function renderCards() {
-    setHeader('Мои карты');
+    setHeader(t('myCards'));
     let cards = [...STATE.cards];
     const filter = STATE.cardFilter || 'all';
     const search = (STATE.cardSearch || '').toLowerCase();
@@ -347,48 +680,35 @@
     if (filter !== 'all') cards = cards.filter(c => c.status === filter);
     if (groupFilter !== 'all') cards = cards.filter(c => c.group === groupFilter);
     if (search) cards = cards.filter(c =>
-      (c.group||'').toLowerCase().includes(search) ||
-      (c.member||'').toLowerCase().includes(search) ||
-      (c.album||'').toLowerCase().includes(search) ||
-      (c.seller||'').toLowerCase().includes(search)
+      (c.group||'').toLowerCase().includes(search) || (c.member||'').toLowerCase().includes(search) ||
+      (c.album||'').toLowerCase().includes(search) || (c.seller||'').toLowerCase().includes(search)
     );
     const groups = [...new Set(STATE.cards.map(c => c.group).filter(Boolean))];
 
+    const usedSlots = STATE.cards.length;
+    const totalSlots = STATE.binderSlots;
+    const limitPercent = Math.min(100, (usedSlots / totalSlots) * 100);
+
     let html = `
-      <input class="search-input" id="cardSearch" placeholder="🔍 Поиск..." value="${STATE.cardSearch||''}">
+      <div class="limit-bar">
+        ${t('limitInfo', { used: usedSlots, total: totalSlots })}
+        <div style="background:rgba(0,0,0,0.04); height:6px; border-radius:3px; margin-top:4px;">
+          <div style="width:${limitPercent}%; height:100%; background:#D3542B; border-radius:3px; transition:width 0.3s;"></div>
+        </div>
+      </div>
+      <input class="search-input" id="cardSearch" placeholder="${t('search')}" value="${STATE.cardSearch||''}">
       <div class="chip-row" style="margin-bottom:6px;">
-        <div class="chip-select ${filter === 'all' ? 'active' : ''}" data-filter="all">Все</div>
-        <div class="chip-select ${filter === 'ordered' ? 'active' : ''}" data-filter="ordered">Заказана</div>
-        <div class="chip-select ${filter === 'paid' ? 'active' : ''}" data-filter="paid">Оплачена</div>
-        <div class="chip-select ${filter === 'shipped' ? 'active' : ''}" data-filter="shipped">Отправлена</div>
-        <div class="chip-select ${filter === 'received' ? 'active' : ''}" data-filter="received">Получена</div>
+        <div class="chip-select ${filter === 'all' ? 'active' : ''}" data-filter="all">${t('all')}</div>
+        <div class="chip-select ${filter === 'ordered' ? 'active' : ''}" data-filter="ordered">${t('ordered')}</div>
+        <div class="chip-select ${filter === 'paid' ? 'active' : ''}" data-filter="paid">${t('paid')}</div>
+        <div class="chip-select ${filter === 'shipped' ? 'active' : ''}" data-filter="shipped">${t('shipped')}</div>
+        <div class="chip-select ${filter === 'received' ? 'active' : ''}" data-filter="received">${t('received')}</div>
       </div>
       <div class="chip-row" style="margin-bottom:10px;">
-        <div class="chip-select ${groupFilter === 'all' ? 'active' : ''}" data-group="all">Все группы</div>
+        <div class="chip-select ${groupFilter === 'all' ? 'active' : ''}" data-group="all">${t('allGroups')}</div>
         ${groups.map(g => `<div class="chip-select ${groupFilter === g ? 'active' : ''}" data-group="${g}">${g}</div>`).join('')}
       </div>
-      ${STATE.showAddForm ? `
-        <div class="add-form" id="addForm">
-          <h4 style="font-size:0.9rem; margin-bottom:8px;">➕ Добавить карту</h4>
-          <label style="font-size:0.7rem;">Группа:</label>
-          <div class="chip-row" id="groupChips"></div>
-          <label style="font-size:0.7rem;">Участник:</label>
-          <div class="chip-row" id="memberChips"></div>
-          <label style="font-size:0.7rem;">Альбом:</label>
-          <div class="chip-row" id="albumChips"></div>
-          <input class="input-field" id="addAlbumInput" placeholder="Или впишите свой альбом">
-          <input class="input-field" id="addSeller" placeholder="Продавец">
-          <input class="input-field" id="addPrice" placeholder="Цена (₽)" type="number">
-          <input class="input-field" id="addDefects" placeholder="Дефекты (если есть)">
-          <input class="input-field" id="addDate" type="date" placeholder="Дата покупки">
-          <label style="font-size:0.7rem;">Фото лицевой стороны:</label>
-          <input type="file" id="addImageFront" accept="image/*" class="input-field">
-          <label style="font-size:0.7rem;">Фото задника:</label>
-          <input type="file" id="addImageBack" accept="image/*" class="input-field">
-          <button class="btn" id="saveNewCard" style="width:100%; margin-top:8px;">Сохранить карту</button>
-          <button class="btn small outline" id="cancelNewCard" style="width:100%; margin-top:4px;">Отмена</button>
-        </div>
-      ` : `<button class="btn" id="showAddFormBtn" style="width:100%; margin-bottom:10px;">+ Добавить карту</button>`}
+      ${STATE.showAddForm ? renderAddForm() : `<button class="btn" id="showAddFormBtn" style="width:100%; margin-bottom:10px;">${t('addCard')}</button>`}
     `;
 
     html += cards.map((c, i) => {
@@ -406,12 +726,13 @@
           <span style="background:${si.bg}; color:${si.color}; border-radius:8px; padding:2px 6px; font-size:0.55rem;">${si.text}</span><br>
           <b>${c.group||'—'} · ${c.member||'—'}</b><br>
           <span style="font-size:0.65rem;">${c.album||''} · ${c.seller||'?'} · ${c.price||'0'}₽</span>
+          ${c.trackNumber ? `<br><span style="font-size:0.6rem;">📦 ${c.trackNumber}</span>` : ''}
           ${c.status !== 'received' ? `<br><span style="font-size:0.6rem; color:#A1A1AA;">${days} дн.</span>` : ''}
         </div>
       </div>`;
     }).join('');
 
-    document.getElementById('mainContent').innerHTML = html || 'Нет карт';
+    document.getElementById('mainContent').innerHTML = html || `<div style="color:#A1A1AA;">${t('noCards')}</div>`;
 
     document.getElementById('cardSearch').addEventListener('input', (e) => { STATE.cardSearch = e.target.value; saveState(); render(); });
     document.querySelectorAll('.chip-select[data-filter]').forEach(chip => {
@@ -423,14 +744,21 @@
 
     if (STATE.showAddForm) {
       setupAddForm();
-      document.getElementById('cancelNewCard').addEventListener('click', () => {
-        STATE.showAddForm = false;
-        saveState(); render();
-      });
+      document.getElementById('cancelNewCard').addEventListener('click', () => { STATE.showAddForm = false; saveState(); render(); });
     } else {
-      document.getElementById('showAddFormBtn').addEventListener('click', () => {
-        STATE.showAddForm = true;
-        saveState(); render();
+      document.getElementById('showAddFormBtn')?.addEventListener('click', () => {
+        if (STATE.cards.length >= STATE.binderSlots) {
+          if (confirm(t('limitReached') + '\n\n' + t('expandBinder'))) {
+            STATE.binderSlots += 10;
+            saveState();
+            showToast(t('slotsAdded', { total: STATE.binderSlots }));
+            STATE.showAddForm = true;
+            render();
+          }
+        } else {
+          STATE.showAddForm = true;
+          render();
+        }
       });
     }
 
@@ -439,14 +767,49 @@
     });
   }
 
+  function renderAddForm() {
+    const sellerOptions = STATE.sellers.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+    return `
+      <div class="add-form" id="addForm">
+        <h4 style="font-size:0.9rem; margin-bottom:8px;">➕ ${t('addCard')}</h4>
+        <label style="font-size:0.7rem;">${t('group')}:</label>
+        <div class="chip-row" id="groupChips"></div>
+        <input class="input-field" id="addNewGroup" placeholder="${t('addGroup')}">
+        <label style="font-size:0.7rem;">${t('member')}:</label>
+        <div class="chip-row" id="memberChips"></div>
+        <input class="input-field" id="addNewMember" placeholder="${t('addMember')}">
+        <label style="font-size:0.7rem;">${t('album')}:</label>
+        <div class="chip-row" id="albumChips"></div>
+        <input class="input-field" id="addAlbumInput" placeholder="${t('addAlbum')}">
+        <label style="font-size:0.7rem;">${t('seller')}:</label>
+        <select class="input-field" id="addSellerSelect">
+          <option value="">${t('selectSeller')}</option>
+          ${sellerOptions}
+        </select>
+        <input class="input-field" id="addSellerNew" placeholder="${t('newSeller')}">
+        <input class="input-field" id="addPrice" placeholder="${t('price')}" type="number">
+        <input class="input-field" id="addTrack" placeholder="${t('track')}">
+        <input class="input-field" id="addDefects" placeholder="${t('defects')}">
+        <input class="input-field" id="addDate" type="date" placeholder="${t('date')}">
+        <label style="font-size:0.7rem;">${t('photoFront')}:</label>
+        <input type="file" id="addImageFront" accept="image/*" class="input-field">
+        <label style="font-size:0.7rem;">${t('photoBack')}:</label>
+        <input type="file" id="addImageBack" accept="image/*" class="input-field">
+        <button class="btn" id="saveNewCard" style="width:100%; margin-top:8px;">${t('saveCard')}</button>
+        <button class="btn small outline" id="cancelNewCard" style="width:100%; margin-top:4px;">${t('cancel')}</button>
+      </div>
+    `;
+  }
+
   function setupAddForm() {
     let selGroup = 'ATEEZ';
     let selMember = '';
     let selAlbum = '';
+    const allGroups = getAllGroups();
 
     const updateForm = () => {
-      const group = GROUPS[selGroup] || { members:[], albums:[] };
-      document.getElementById('groupChips').innerHTML = Object.keys(GROUPS).map(g => `<div class="chip-select ${selGroup===g?'active':''}" data-group="${g}">${g}</div>`).join('');
+      const group = allGroups[selGroup] || { members:[], albums:[] };
+      document.getElementById('groupChips').innerHTML = Object.keys(allGroups).map(g => `<div class="chip-select ${selGroup===g?'active':''}" data-group="${g}">${g}</div>`).join('');
       document.getElementById('memberChips').innerHTML = group.members.map(m => `<div class="chip-select ${selMember===m?'active':''}" data-member="${m}">${m}</div>`).join('');
       document.getElementById('albumChips').innerHTML = group.albums.map(a => `<div class="chip-select ${selAlbum===a?'active':''}" data-album="${a}">${a}</div>`).join('');
 
@@ -463,24 +826,53 @@
     updateForm();
 
     document.getElementById('saveNewCard').addEventListener('click', () => {
+      const newGroup = document.getElementById('addNewGroup').value.trim();
+      if (newGroup) {
+        if (!customGroups[newGroup]) customGroups[newGroup] = { members: [], albums: [] };
+        selGroup = newGroup;
+      }
+
+      const newMember = document.getElementById('addNewMember').value.trim();
+      if (newMember) {
+        if (!customGroups[selGroup]) customGroups[selGroup] = { members: [], albums: [] };
+        if (!customGroups[selGroup].members.includes(newMember)) {
+          customGroups[selGroup].members.push(newMember);
+        }
+        selMember = newMember;
+      }
+
+      let finalAlbum = selAlbum;
       const albumInput = document.getElementById('addAlbumInput').value.trim();
-      const finalAlbum = selAlbum || albumInput;
-      if (!selMember) return alert('Выберите участника');
+      if (albumInput) finalAlbum = albumInput;
+      if (finalAlbum && !allGroups[selGroup]?.albums.includes(finalAlbum)) {
+        if (!customGroups[selGroup]) customGroups[selGroup] = { members: [], albums: [] };
+        customGroups[selGroup].albums.push(finalAlbum);
+      }
+
+      if (!selMember) return alert(t('selectMember'));
+
+      let sellerName = document.getElementById('addSellerSelect').value;
+      if (!sellerName) sellerName = document.getElementById('addSellerNew').value.trim();
+      if (sellerName && !STATE.sellers.find(s => s.name === sellerName)) {
+        STATE.sellers.push({ id: generateId(), name: sellerName, avatar: '', note: '', reviews: [] });
+      }
 
       const saveCard = (front, back) => {
-        STATE.cards.push({
+        const card = {
           id: generateId(), group: selGroup, member: selMember, album: finalAlbum,
-          seller: document.getElementById('addSeller').value.trim(),
-          price: document.getElementById('addPrice').value.trim(),
+          seller: sellerName, price: document.getElementById('addPrice').value.trim(),
+          trackNumber: document.getElementById('addTrack').value.trim(),
           defects: document.getElementById('addDefects').value.trim(),
           date: document.getElementById('addDate').value,
           imageFront: front || '', imageBack: back || '',
           status: 'ordered', statusDate: new Date().toISOString(),
           statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
-        });
-        addRecentAction(`➕ ${selGroup} — ${selMember}`);
+        };
+        STATE.cards.push(card);
+        addRecentAction(`➕ ${selGroup} — ${selMember}`, card.id);
         STATE.showAddForm = false;
         saveState(); render();
+        showToast(t('cardAdded'));
       };
 
       const fileFront = document.getElementById('addImageFront').files[0];
@@ -504,20 +896,23 @@
         <h4>${card.group} — ${card.member}</h4>
         <div style="display:flex; gap:8px; margin-bottom:8px;">
           <div style="width:80px; height:120px; border-radius:10px; background-size:cover; background-position:center; background-color:#F6F6F8; ${card.imageFront ? `background-image:url('${card.imageFront}')` : ''}"></div>
-          ${card.imageBack ? `<div style="width:80px; height:120px; border-radius:10px; background-size:cover; background-position:center; background-color:#F6F6F8; background-image:url('${card.imageBack}')"></div>` : ''}
+          ${card.imageBack ? `<div style="width:80px; height:120px; border-radius:10px; background-size:cover; background-color:#F6F6F8; background-image:url('${card.imageBack}')"></div>` : ''}
         </div>
         <div style="font-size:0.8rem;">
-          <div><b>Альбом:</b> ${card.album||'—'}</div>
-          <div><b>Цена:</b> ${card.price||'—'} ₽</div>
-          <div><b>Продавец:</b> ${card.seller||'—'}</div>
-          <div><b>Дефекты:</b> ${card.defects||'—'}</div>
-          <div><b>Дата:</b> ${card.date||'—'}</div>
+          <div><b>${t('album')}:</b> ${card.album||'—'}</div>
+          <div><b>${t('price')}:</b> ${card.price||'—'} ₽</div>
+          <div><b>${t('seller')}:</b> ${card.seller||'—'}</div>
+          <div><b>${t('track')}:</b> ${card.trackNumber||'—'}</div>
+          <div><b>${t('defects')}:</b> ${card.defects||'—'}</div>
+          <div><b>${t('date')}:</b> ${card.date||'—'}</div>
           <div><b>Статус:</b> ${si.text}</div>
         </div>
         <div class="chip-row" style="margin-top:6px;">
           ${['ordered','paid','shipped','received'].map(s => `<div class="chip-select ${card.status===s?'active':''}" data-status="${s}">${getStatusInfo(s).text}</div>`).join('')}
         </div>
-        <button class="btn small outline" id="closeCardDetail" style="margin-top:10px; width:100%;">Закрыть</button>
+        <button class="btn small" id="editCardBtn" style="margin-top:6px;">${t('editCard')}</button>
+        <button class="btn small danger" id="deleteCardBtn" style="margin-top:4px;">${t('delete')}</button>
+        <button class="btn small outline" id="closeCardDetail" style="margin-top:6px; width:100%;">${t('close')}</button>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -527,14 +922,64 @@
         card.status = chip.dataset.status;
         card.statusDate = new Date().toISOString();
         card.statusHistory.push({ status: card.status, date: new Date().toISOString() });
-        addRecentAction(`🔄 ${card.group} — ${card.member}: ${getStatusInfo(card.status).text}`);
+        addRecentAction(`${t('statusChanged')}: ${card.group} — ${card.member}`, card.id);
         saveState(); render(); overlay.remove();
       });
     });
+    overlay.querySelector('#editCardBtn').addEventListener('click', () => { overlay.remove(); showEditCardDialog(index); });
+    overlay.querySelector('#deleteCardBtn').addEventListener('click', () => {
+      const reason = prompt(t('deleteReason'));
+      if (reason) {
+        STATE.archive.push({ ...card, deleteReason: reason, deletedAt: new Date().toISOString() });
+        STATE.cards.splice(index, 1);
+        addRecentAction(`${t('cardDeleted')}: ${card.group} — ${card.member} (${reason})`);
+        saveState(); render(); overlay.remove();
+      }
+    });
   }
 
+  function showEditCardDialog(index) {
+    const card = STATE.cards[index];
+    if (!card) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    const sellerOptions = STATE.sellers.map(s => `<option value="${s.name}" ${card.seller===s.name?'selected':''}>${s.name}</option>`).join('');
+    overlay.innerHTML = `
+      <div class="dialog">
+        <h4>${t('editCard')}</h4>
+        <label style="font-size:0.7rem;">${t('seller')}:</label>
+        <select class="input-field" id="editSellerSelect">
+          <option value="">${t('selectSeller')}</option>
+          ${sellerOptions}
+        </select>
+        <input class="input-field" id="editSellerNew" placeholder="${t('newSeller')}">
+        <input class="input-field" id="editPrice" placeholder="${t('price')}" value="${card.price||''}">
+        <input class="input-field" id="editTrack" placeholder="${t('track')}" value="${card.trackNumber||''}">
+        <input class="input-field" id="editDefects" placeholder="${t('defects')}" value="${card.defects||''}">
+        <button class="btn" id="saveEditBtn" style="width:100%; margin-top:10px;">${t('save')}</button>
+        <button class="btn small outline" id="cancelEditBtn" style="width:100%; margin-top:4px;">${t('cancel')}</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#saveEditBtn').addEventListener('click', () => {
+      let sellerName = overlay.querySelector('#editSellerSelect').value;
+      if (!sellerName) sellerName = overlay.querySelector('#editSellerNew').value.trim();
+      if (sellerName && !STATE.sellers.find(s => s.name === sellerName)) {
+        STATE.sellers.push({ id: generateId(), name: sellerName, avatar: '', note: '', reviews: [] });
+      }
+      card.seller = sellerName;
+      card.price = overlay.querySelector('#editPrice').value.trim();
+      card.trackNumber = overlay.querySelector('#editTrack').value.trim();
+      card.defects = overlay.querySelector('#editDefects').value.trim();
+      addRecentAction(`✏️ ${t('editCard')}: ${card.group} — ${card.member}`, card.id);
+      saveState(); render(); overlay.remove();
+    });
+    overlay.querySelector('#cancelEditBtn').addEventListener('click', () => overlay.remove());
+  }
+
+  // ========== БИНДЕР ==========
   function renderBinder() {
-    setHeader('Биндер');
+    setHeader(t('binder'));
     const received = STATE.cards.filter(c => c.status === 'received');
     const grouped = {};
     received.forEach(c => {
@@ -556,7 +1001,7 @@
       });
       html += '</div>';
     });
-    document.getElementById('mainContent').innerHTML = html || '<div style="color:#A1A1AA;">Нет полученных карт</div>';
+    document.getElementById('mainContent').innerHTML = html || `<div style="color:#A1A1AA;">${t('noReceived')}</div>`;
     document.querySelectorAll('[data-card-id]').forEach(el => {
       el.addEventListener('click', () => {
         const idx = STATE.cards.findIndex(c => c.id === el.dataset.cardId);
@@ -565,9 +1010,10 @@
     });
   }
 
+  // ========== ВИШЛИСТ ==========
   function renderWishlist() {
-    setHeader('Вишлист');
-    let html = '<button class="btn" id="addWishBtn" style="width:100%; margin-bottom:10px;">+ Добавить в вишлист</button>';
+    setHeader(t('wishlist'));
+    let html = `<button class="btn" id="addWishBtn" style="width:100%; margin-bottom:10px;">${t('addToWishlist')}</button>`;
     html += STATE.wishlist.map((w, i) => `
       <div class="card-cell">
         ${w.imageFront ? `<div class="custom-card-image-small" style="background-image:url('${w.imageFront}'); background-size:cover;"></div>` : ''}
@@ -575,10 +1021,11 @@
           <b>${w.group||'—'} · ${w.member||'—'}</b><br>
           <span style="font-size:0.65rem;">${w.album||''} · ${w.note||''}</span>
         </div>
-        <button class="btn small order-wish-btn" data-index="${i}">📦 Заказать</button>
+        <button class="btn small order-wish-btn" data-index="${i}">${t('order')}</button>
+        <button class="btn small outline share-wish-btn" data-index="${i}" style="margin-left:2px;">${t('share')}</button>
       </div>
     `).join('');
-    document.getElementById('mainContent').innerHTML = html || 'Вишлист пуст';
+    document.getElementById('mainContent').innerHTML = html || `<div style="color:#A1A1AA;">${t('emptyWishlist')}</div>`;
     document.getElementById('addWishBtn')?.addEventListener('click', () => showAddWishDialog());
     document.querySelectorAll('.order-wish-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -587,14 +1034,27 @@
         const w = STATE.wishlist[idx];
         STATE.cards.push({
           id: generateId(), group: w.group, member: w.member, album: w.album,
-          seller: '', price: '', defects: '', date: '',
+          seller: '', price: '', trackNumber: '', defects: '', date: '',
           imageFront: w.imageFront || '', imageBack: '',
           status: 'ordered', statusDate: new Date().toISOString(),
           statusHistory: [{ status:'ordered', date: new Date().toISOString() }]
         });
         STATE.wishlist.splice(idx, 1);
-        addRecentAction(`📦 Из вишлиста: ${w.group} — ${w.member}`);
+        addRecentAction(`📦 ${t('order')}: ${w.group} — ${w.member}`);
         saveState(); render();
+      });
+    });
+    document.querySelectorAll('.share-wish-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const w = STATE.wishlist[parseInt(btn.dataset.index)];
+        if (!w) return;
+        const text = `💖 ${t('wishlist')}: ${w.group} — ${w.member} (${w.album}) ${w.note ? '— ' + w.note : ''}`;
+        if (navigator.share) {
+          navigator.share({ title: t('wishlist'), text });
+        } else {
+          prompt('Скопируйте текст:', text);
+        }
       });
     });
   }
@@ -604,22 +1064,22 @@
     overlay.className = 'overlay';
     overlay.innerHTML = `
       <div class="dialog">
-        <h4>💖 В вишлист</h4>
-        <input class="input-field" id="wishGroup" placeholder="Группа">
-        <input class="input-field" id="wishMember" placeholder="Участник">
-        <input class="input-field" id="wishAlbum" placeholder="Альбом">
-        <input class="input-field" id="wishNote" placeholder="Заметка (необязательно)">
-        <label style="font-size:0.7rem;">Фото (необязательно):</label>
+        <h4>💖 ${t('addToWishlist')}</h4>
+        <input class="input-field" id="wishGroup" placeholder="${t('group')}">
+        <input class="input-field" id="wishMember" placeholder="${t('member')}">
+        <input class="input-field" id="wishAlbum" placeholder="${t('album')}">
+        <input class="input-field" id="wishNote" placeholder="${t('defects')}">
+        <label style="font-size:0.7rem;">${t('photoFront')}:</label>
         <input type="file" id="wishImage" accept="image/*" class="input-field">
-        <button class="btn" id="saveWishBtn" style="width:100%; margin-top:10px;">Сохранить</button>
-        <button class="btn small outline" id="cancelWishBtn" style="width:100%; margin-top:4px;">Отмена</button>
+        <button class="btn" id="saveWishBtn" style="width:100%; margin-top:10px;">${t('save')}</button>
+        <button class="btn small outline" id="cancelWishBtn" style="width:100%; margin-top:4px;">${t('cancel')}</button>
       </div>
     `;
     document.body.appendChild(overlay);
     overlay.querySelector('#saveWishBtn').addEventListener('click', () => {
       const group = overlay.querySelector('#wishGroup').value.trim();
       const member = overlay.querySelector('#wishMember').value.trim();
-      if (!group || !member) return alert('Введите группу и участника');
+      if (!group || !member) return alert(t('selectMember'));
       const file = overlay.querySelector('#wishImage').files[0];
       const saveWish = (img) => {
         STATE.wishlist.push({
@@ -636,15 +1096,242 @@
     overlay.querySelector('#cancelWishBtn').addEventListener('click', () => overlay.remove());
   }
 
-  function renderSettings() {
-    setHeader('Настройки');
-    document.getElementById('mainContent').innerHTML = `
-      <div style="text-align:center; color:#A1A1AA; padding:40px;">
-        <span class="material-symbols-outlined" style="font-size:3rem;">settings</span>
-        <p>Настройки скоро появятся</p>
-        <button class="btn small" id="backFromSettings">← На главную</button>
+  // ========== ПРОДАВЦЫ ==========
+  function renderSellers() {
+    setHeader(t('sellers'));
+    const sellers = STATE.sellers || [];
+    let html = '';
+    sellers.forEach((s, i) => {
+      const cards = STATE.cards.filter(c => c.seller === s.name);
+      const lastCard = cards[cards.length - 1];
+      const avgRating = s.reviews?.length ? (s.reviews.reduce((sum,r) => sum + r.rating, 0) / s.reviews.length).toFixed(1) : '—';
+      html += `
+        <div class="chat-item" data-seller-index="${i}">
+          <div class="person-avatar" style="background-image:url('${s.avatar||''}'); background-size:cover;"></div>
+          <div style="flex:1;">
+            <b>${s.name}</b><br>
+            <span style="font-size:0.65rem; color:#A1A1AA;">${lastCard ? `${lastCard.group} — ${lastCard.member} · ${lastCard.price}₽` : 'Нет сделок'}</span>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.65rem;">⭐ ${avgRating}</div>
+            <div style="font-size:0.55rem; color:#A1A1AA;">${cards.length} карт</div>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('mainContent').innerHTML = html || `<div style="color:#A1A1AA; text-align:center; padding:40px;">${t('noSellers')}</div>`;
+    document.querySelectorAll('[data-seller-index]').forEach(el => {
+      el.addEventListener('click', () => {
+        STATE.activeTab = 'sellerDetail';
+        STATE.selectedSellerIndex = parseInt(el.dataset.sellerIndex);
+        render();
+      });
+    });
+  }
+
+  function renderSellerDetail() {
+    const seller = STATE.sellers[STATE.selectedSellerIndex];
+    if (!seller) { STATE.activeTab = 'sellers'; render(); return; }
+    setHeader(seller.name, true, 'sellers');
+    const cards = STATE.cards.filter(c => c.seller === seller.name);
+    const avgRating = seller.reviews?.length ? (seller.reviews.reduce((s,r) => s + r.rating, 0) / seller.reviews.length).toFixed(1) : '—';
+
+    let html = `
+      <div class="profile-header">
+        <div class="person-avatar large" id="sellerAvatarLarge" style="background-image:url('${seller.avatar||''}'); background-size:cover; cursor:pointer;" title="Нажмите, чтобы изменить аватар"></div>
+        <h4>${seller.name}</h4>
+        <div style="font-size:0.8rem;">⭐ ${avgRating} (${cards.length} сделок)</div>
+        <input type="file" id="sellerAvatarInput" accept="image/*" style="display:none;">
+        <button class="btn small" id="editSellerNoteBtn" style="margin-top:6px;">${t('notes')}</button>
+      </div>
+      <h4 class="section-title">${t('reviews')}</h4>
+      ${seller.reviews?.map(r => `<div style="font-size:0.7rem; margin:4px 0; background:#FFFFFF; padding:8px; border-radius:10px;"><span class="star-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span> — ${r.text||''}</div>`).join('') || `<div style="font-size:0.7rem; color:#A1A1AA;">${t('noReviews')}</div>`}
+      <button class="btn small" id="addReviewBtn" style="margin-top:8px;">${t('leaveReview')}</button>
+      <h4 class="section-title">${t('feed')}</h4>
+      <div class="seller-feed">
+        ${cards.map(c => `
+          <div class="seller-feed-item" style="background-image:url('${c.imageFront||''}');" data-card-id="${c.id}">
+            <div class="caption">${c.group} — ${c.member}<br>${c.price||'0'}₽</div>
+          </div>
+        `).join('')}
       </div>
     `;
+    document.getElementById('mainContent').innerHTML = html || '<div style="color:#A1A1AA;">Нет карт</div>';
+
+    document.getElementById('sellerAvatarLarge').addEventListener('click', () => {
+      document.getElementById('sellerAvatarInput').click();
+    });
+    document.getElementById('sellerAvatarInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const r = new FileReader();
+        r.onload = ev => {
+          seller.avatar = ev.target.result;
+          saveState(); render();
+        };
+        r.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('editSellerNoteBtn').addEventListener('click', () => {
+      const note = prompt(t('notes'), seller.note || '');
+      if (note !== null) { seller.note = note; saveState(); render(); }
+    });
+
+    document.getElementById('addReviewBtn').addEventListener('click', () => {
+      showAddReviewDialog(STATE.selectedSellerIndex);
+    });
+
+    document.querySelectorAll('[data-card-id]').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = STATE.cards.findIndex(c => c.id === el.dataset.cardId);
+        if (idx > -1) showCardDetail(idx);
+      });
+    });
+  }
+
+  function showAddReviewDialog(sellerIndex) {
+    const seller = STATE.sellers[sellerIndex];
+    if (!seller) return;
+    let rating = 5;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+
+    const renderStars = () => {
+        overlay.innerHTML = `
+          <div class="dialog">
+            <h4>⭐ Отзыв на ${seller.name} <span style="color:#A1A1AA; font-size:0.7rem;">(для себя)</span></h4>
+            <div class="chip-row" style="margin:8px 0;">
+              ${[1,2,3,4,5].map(r => `<div class="chip-select ${rating===r?'active':''}" data-rating="${r}">${'★'.repeat(r)}</div>`).join('')}
+            </div>
+            <textarea id="reviewText" placeholder="Текст отзыва" class="input-field" rows="3"></textarea>
+            <button class="btn" id="saveReviewBtn" style="width:100%; margin-top:10px;">Сохранить</button>
+            <button class="btn small outline" id="cancelReviewBtn" style="width:100%; margin-top:4px;">Отмена</button>
+          </div>
+        `;
+
+        overlay.querySelectorAll('[data-rating]').forEach(chip => {
+            chip.addEventListener('click', () => {
+                rating = parseInt(chip.dataset.rating);
+                renderStars();
+            });
+        });
+
+        overlay.querySelector('#saveReviewBtn').addEventListener('click', () => {
+            seller.reviews.push({
+                rating,
+                text: overlay.querySelector('#reviewText').value.trim(),
+                date: new Date().toISOString()
+            });
+            saveState();
+            render();
+            overlay.remove();
+        });
+
+        overlay.querySelector('#cancelReviewBtn').addEventListener('click', () => overlay.remove());
+    };
+
+    renderStars();
+    document.body.appendChild(overlay);
+  }
+
+  // ========== ПРОФИЛЬ ==========
+  function renderProfile() {
+    setHeader(t('profile'));
+    const received = STATE.cards.filter(c => c.status === 'received').length;
+    const transit = STATE.cards.filter(c => c.status !== 'received').length;
+    let spent = 0;
+    STATE.cards.forEach(c => { if (c.price) spent += Number(c.price) || 0; });
+
+    document.getElementById('mainContent').innerHTML = `
+      <div class="profile-header">
+        <div class="person-avatar large" id="profileAvatarLarge" style="background-image:url('${STATE.profile.avatar||''}'); background-size:cover; cursor:pointer;" title="Нажмите, чтобы изменить аватар"></div>
+        <input type="file" id="profileAvatarInput" accept="image/*" style="display:none;">
+        <h4>${STATE.profile.name || 'Коллекционер'}</h4>
+        <div style="font-size:0.7rem; color:#A1A1AA;">${received} получено · ${transit} в пути · ${spent.toLocaleString()} ₽</div>
+        <button class="btn small" id="editProfileBtn" style="margin-top:8px;">✏️ Имя</button>
+      </div>
+      <h4 class="section-title">${t('archive')}</h4>
+      <div style="color:#A1A1AA; text-align:center; padding:40px;">${t('archiveUnavailable')}</div>
+      <button class="btn small" id="backFromProfile" style="width:100%; margin-top:10px;">${t('backToHome')}</button>
+    `;
+
+    document.getElementById('profileAvatarLarge').addEventListener('click', () => {
+      document.getElementById('profileAvatarInput').click();
+    });
+    document.getElementById('profileAvatarInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const r = new FileReader();
+        r.onload = ev => {
+          STATE.profile.avatar = ev.target.result;
+          saveState(); render();
+        };
+        r.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('editProfileBtn').addEventListener('click', () => {
+      const name = prompt('Имя:', STATE.profile.name);
+      if (name !== null) { STATE.profile.name = name; saveState(); render(); }
+    });
+    document.getElementById('backFromProfile').addEventListener('click', () => { STATE.activeTab = 'home'; render(); });
+  }
+
+  // ========== НАСТРОЙКИ ==========
+  function renderSettings() {
+    setHeader(t('settings'));
+    document.getElementById('mainContent').innerHTML = `
+      <div style="text-align:center; padding:20px;">
+        <div style="margin:10px 0;">
+          <label style="font-size:0.8rem;">${t('sound')}</label>
+          <input type="checkbox" ${STATE.settings.sound ? 'checked' : ''} id="toggleSound" style="margin-left:8px;">
+        </div>
+        <div style="margin:10px 0;">
+          <label style="font-size:0.8rem;">${t('musicVolume')}</label>
+          <input type="range" min="0" max="100" value="${(STATE.settings.musicVolume||0.3)*100}" id="volumeSlider" style="margin-left:8px; width:60%;">
+        </div>
+        <div style="margin:10px 0;">
+          <label style="font-size:0.8rem;">${t('language')}</label>
+          <select id="langSelect" style="margin-left:8px; padding:4px; border-radius:8px;">
+            <option value="ru" ${STATE.settings.language==='ru'?'selected':''}>Русский</option>
+            <option value="en" ${STATE.settings.language==='en'?'selected':''}>English</option>
+          </select>
+        </div>
+        <button class="btn small" id="exportBtn" style="margin:6px;">${t('exportData')}</button>
+        <button class="btn small" id="importBtn" style="margin:6px;">${t('importData')}</button>
+        <input type="file" id="importFile" accept=".json" style="display:none;">
+        <button class="btn small danger" id="resetDataBtn" style="margin-top:20px;">${t('resetData')}</button>
+        <button class="btn small outline" id="backFromSettings" style="margin-top:10px; width:100%;">${t('backToHome')}</button>
+      </div>
+    `;
+    document.getElementById('toggleSound').addEventListener('change', (e) => {
+      STATE.settings.sound = e.target.checked;
+      if (STATE.settings.sound) { bgMusic.play().catch(() => {}); } else { bgMusic.pause(); }
+      updateMusicIcon();
+      saveState();
+    });
+    document.getElementById('volumeSlider').addEventListener('input', (e) => {
+      STATE.settings.musicVolume = e.target.value / 100;
+      bgMusic.volume = STATE.settings.musicVolume;
+      saveState();
+    });
+    document.getElementById('langSelect').addEventListener('change', (e) => {
+      STATE.settings.language = e.target.value;
+      saveState();
+      render();
+    });
+    document.getElementById('exportBtn').addEventListener('click', exportData);
+    document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importFile').click();
+    });
+    document.getElementById('importFile').addEventListener('change', (e) => {
+      if (e.target.files[0]) importData(e.target.files[0]);
+    });
+    document.getElementById('resetDataBtn').addEventListener('click', () => {
+      if (confirm('Точно сбросить все данные?')) { localStorage.clear(); location.reload(); }
+    });
     document.getElementById('backFromSettings').addEventListener('click', () => { STATE.activeTab = 'home'; render(); });
   }
 
